@@ -1,10 +1,13 @@
 plugins {
+    id 'idea'
     id 'java'
     id 'io.freefair.lombok' version '5.3.3.3'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+// TODO: group subname kserve ok?!
+group 'com.bakdata.kserve'
+version '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.11
 
 repositories {
     mavenCentral()
@@ -17,7 +20,7 @@ dependencies {
     implementation group: 'org.json', name: 'json', version: '20211205'
     implementation group: 'io.github.resilience4j', name: 'resilience4j-retry', version: '1.7.1'
 
-
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }

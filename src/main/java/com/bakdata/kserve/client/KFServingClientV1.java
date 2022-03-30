@@ -1,4 +1,4 @@
-package client;
+package com.bakdata.kserve.client;
 
 import java.time.Duration;
 import lombok.Builder;

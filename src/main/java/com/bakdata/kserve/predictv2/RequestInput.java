@@ -1,16 +1,12 @@
-package predictv2;
+package com.bakdata.kserve.predictv2;
 
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ResponseOutput<T> {
+public class RequestInput<T> {
     private String name;
     private List<Integer> shape;
     private String datatype;

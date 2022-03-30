@@ -1,12 +1,12 @@
-package client;
+package com.bakdata.kserve.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.time.Duration;
 import java.util.Optional;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import predictv2.InferenceError;
-import predictv2.InferenceRequest;
+import com.bakdata.kserve.predictv2.InferenceError;
+import com.bakdata.kserve.predictv2.InferenceRequest;
 
 @Slf4j
 public class KFServingClientV2 extends KFServingClient<InferenceRequest<?, ?>> {

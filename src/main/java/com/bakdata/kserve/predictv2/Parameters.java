@@ -1,4 +1,4 @@
-package predictv2;
+package com.bakdata.kserve.predictv2;
 
 import lombok.Builder;
 import lombok.Data;

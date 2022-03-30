@@ -1,7 +1,8 @@
-package client;
+package com.bakdata.kserve.client;
+
+import com.bakdata.kserve.predictv2.InferenceRequest;
 
 import java.time.Duration;
-import predictv2.InferenceRequest;
 
 public class KFServingClientFactoryV2 implements KFServingClientFactory {
     @Override
