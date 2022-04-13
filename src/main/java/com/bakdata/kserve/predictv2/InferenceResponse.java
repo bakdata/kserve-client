@@ -1,15 +1,20 @@
 package com.bakdata.kserve.predictv2;
 
-import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+import java.util.List;
 
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 public class InferenceResponse<T> {
-    private String model_name;
-    private String model_version;
-    private String id;
-    private Parameters parameters;
-    private List<ResponseOutput<T>> outputs;
+    @NonNull
+    private final String model_name;
+    private final String model_version;
+    @NonNull
+    private final String id;
+    private final Parameters parameters;
+    @NonNull
+    private final List<ResponseOutput<T>> outputs;
 }

@@ -47,10 +47,9 @@ public abstract class KFServingClient<I> {
 
     @Slf4j
     private static class RetryInterceptor implements Interceptor {
-        @SneakyThrows
         @NotNull
         @Override
-        public Response intercept(final Chain chain) {
+        public Response intercept(final Chain chain) throws IOException {
             final Request request = chain.request();
 
             // wait_interval = min(max_interval, (initial_interval * multiplier^n) +/- (random_interval))
@@ -71,7 +70,11 @@ public abstract class KFServingClient<I> {
                 return chain.proceed(request);
             });
 
-            return requestCallable.call();
+            try {
+                return requestCallable.call();
+            } catch (Exception e) {
+                throw new IOException(e);
+            }
         }
     }
 
@@ -145,7 +148,7 @@ public abstract class KFServingClient<I> {
     }
 
     private static Request getRequest(final String bodyString, final HttpUrl url) {
-        final MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        final MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         final RequestBody requestBody = RequestBody
                 .create(bodyString, mediaType);
         return new Request.Builder()

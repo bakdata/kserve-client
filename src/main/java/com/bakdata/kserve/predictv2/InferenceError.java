@@ -1,11 +1,12 @@
 package com.bakdata.kserve.predictv2;
 
-import lombok.Data;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data
-@NoArgsConstructor
+@Value
+@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 public class InferenceError {
-    private String error;
-    private String detail;
+    String error;
+    String detail;
 }

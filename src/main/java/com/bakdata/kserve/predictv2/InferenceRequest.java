@@ -1,18 +1,22 @@
 package com.bakdata.kserve.predictv2;
 
+import lombok.Builder;
+import lombok.NonNull;
+import lombok.Value;
+
 import java.util.Collections;
 import java.util.List;
-import lombok.Builder;
-import lombok.Data;
 
-@Data
+@Value
 @Builder
 public class InferenceRequest<I, O> {
-    private String id;
-    private Parameters parameters;
+    String id;
+    Parameters parameters;
+    @NonNull
     @Builder.Default
-    private List<RequestInput<I>> inputs = Collections.emptyList();
+    List<RequestInput<I>> inputs = Collections.emptyList();
+    @NonNull
     @Builder.Default
-    private List<RequestOutput<O>> outputs = Collections.emptyList();
+    List<RequestOutput<O>> outputs = Collections.emptyList();
 }
 
