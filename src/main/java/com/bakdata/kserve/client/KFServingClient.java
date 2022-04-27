@@ -6,12 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import io.github.resilience4j.core.IntervalFunction;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.time.Duration;
-import java.util.Optional;
-import java.util.concurrent.Callable;
-import lombok.SneakyThrows;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -22,7 +17,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.time.Duration;
+import java.util.Optional;
+import java.util.concurrent.Callable;
+
 @Slf4j
+@RequiredArgsConstructor
 public abstract class KFServingClient<I> {
 
     private static final int RETRY_MAX_ATTEMPTS = Optional.ofNullable(System.getenv("KFSERVING_RETRY_MAX_ATTEMPTS"))
@@ -41,9 +43,9 @@ public abstract class KFServingClient<I> {
                     .orElse(Duration.ofMillis(16000));
 
     protected static final ObjectMapper OBJECT_MAPPER = createObjectMapper();
-    private final OkHttpClient httpClient;
     private final String service;
     private final String modelName;
+    private final OkHttpClient httpClient;
 
     @Slf4j
     private static class RetryInterceptor implements Interceptor {
@@ -78,11 +80,8 @@ public abstract class KFServingClient<I> {
         }
     }
 
-    KFServingClient(
-            final String service, final String modelName, final Duration requestReadTimeout) {
-        this.service = service;
-        this.modelName = modelName;
-        this.httpClient = new OkHttpClient.Builder()
+    protected static OkHttpClient getHttpClient(final Duration requestReadTimeout) {
+        return new OkHttpClient.Builder()
                 .readTimeout(requestReadTimeout)
                 .addInterceptor(new RetryInterceptor())
                 .build();

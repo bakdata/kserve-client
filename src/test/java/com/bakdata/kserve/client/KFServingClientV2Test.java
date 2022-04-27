@@ -1,13 +1,11 @@
-package com.bakdata.kserve;
+package com.bakdata.kserve.client;
 
+import com.bakdata.kserve.KFServingMock;
+import com.bakdata.kserve.KFServingMockV2;
 import com.bakdata.kserve.client.KFServingClient.InferenceRequestException;
-import com.bakdata.kserve.client.KFServingClientV2;
 import com.bakdata.kserve.predictv2.InferenceRequest;
 import com.bakdata.kserve.predictv2.Parameters;
 import com.bakdata.kserve.predictv2.RequestInput;
-import java.io.IOException;
-import java.time.Duration;
-import java.util.List;
 import lombok.Getter;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
@@ -19,6 +17,10 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.util.List;
 
 @ExtendWith(SoftAssertionsExtension.class)
 class KFServingClientV2Test {
@@ -52,7 +54,7 @@ class KFServingClientV2Test {
         final KFServingClientV2 client = KFServingClientV2.builder()
                 .service(this.mockServer.getWholeServiceEndpoint())
                 .modelName("test-model")
-                .requestReadTimeout(Duration.ofMillis(10000))
+                .httpClient(KFServingClientV2.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         this.softly.assertThat(client.makeInferenceRequest(getFakeInferenceRequest("data"),
@@ -68,7 +70,7 @@ class KFServingClientV2Test {
         final KFServingClientV2 client = KFServingClientV2.builder()
                 .service(this.mockServer.getWholeServiceEndpoint())
                 .modelName("fake-model")
-                .requestReadTimeout(Duration.ofMillis(10000))
+                .httpClient(KFServingClientV2.getHttpClient(Duration.ofMillis(10000)))
                 .build();
         final InferenceRequest<String, String> fakeInferenceRequest = getFakeInferenceRequest("data");
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, "") )
@@ -92,7 +94,7 @@ class KFServingClientV2Test {
         final KFServingClientV2 client = KFServingClientV2.builder()
                 .service(this.mockServer.getWholeServiceEndpoint())
                 .modelName("test-model")
-                .requestReadTimeout(Duration.ofMillis(10000))
+                .httpClient(KFServingClientV2.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         final InferenceRequest<String, String> fakeInferenceRequest = getFakeInferenceRequest("data");
@@ -108,7 +110,7 @@ class KFServingClientV2Test {
         final KFServingClientV2 client = KFServingClientV2.builder()
                 .service(this.mockServer.getWholeServiceEndpoint())
                 // Important so that request is aborted and retried
-                .requestReadTimeout(Duration.ofMillis(1000))
+                .httpClient(KFServingClientV2.getHttpClient(Duration.ofMillis(1000)))
                 .modelName("test-model")
                 .build();
 

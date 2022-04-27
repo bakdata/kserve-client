@@ -19,4 +19,3 @@ public class InferenceRequest<I, O> {
     @Builder.Default
     List<RequestOutput<O>> outputs = Collections.emptyList();
 }
-

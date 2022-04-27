@@ -1,9 +1,6 @@
-package com.bakdata.kserve;
+package com.bakdata.kserve.client;
 
 import com.bakdata.kserve.client.KFServingClient.InferenceRequestException;
-import com.bakdata.kserve.client.KFServingClientV1;
-import java.io.IOException;
-import java.time.Duration;
 import lombok.Getter;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
@@ -16,6 +13,9 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.io.IOException;
+import java.time.Duration;
 
 @ExtendWith(SoftAssertionsExtension.class)
 class KFServingClientV1Test {
@@ -35,7 +35,7 @@ class KFServingClientV1Test {
         final KFServingClientV1 client = KFServingClientV1.builder()
                 .service(this.mockServer.getWholeServiceEndpoint())
                 .modelName("test-model")
-                .requestReadTimeout(Duration.ofMillis(10000))
+                .httpClient(KFServingClientV1.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         this.softly.assertThat(client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
@@ -50,7 +50,7 @@ class KFServingClientV1Test {
         final KFServingClientV1 client = KFServingClientV1.builder()
                 .service(this.mockServer.getWholeServiceEndpoint())
                 .modelName("fake-model")
-                .requestReadTimeout(Duration.ofMillis(10000))
+                .httpClient(KFServingClientV1.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
@@ -80,7 +80,7 @@ class KFServingClientV1Test {
         final KFServingClientV1 client = KFServingClientV1.builder()
                 .service(this.mockServer.getWholeServiceEndpoint())
                 .modelName("test-model")
-                .requestReadTimeout(Duration.ofMillis(10000))
+                .httpClient(KFServingClientV1.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
@@ -96,7 +96,7 @@ class KFServingClientV1Test {
         final KFServingClientV1 client = KFServingClientV1.builder()
                 .service(this.mockServer.getWholeServiceEndpoint())
                 // Important so that request is aborted and retried
-                .requestReadTimeout(Duration.ofMillis(1000))
+                .httpClient(KFServingClientV1.getHttpClient(Duration.ofMillis(1000)))
                 .modelName("test-model")
                 .build();
 

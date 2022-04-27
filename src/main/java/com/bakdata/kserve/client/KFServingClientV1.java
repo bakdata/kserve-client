@@ -1,8 +1,8 @@
 package com.bakdata.kserve.client;
 
-import java.time.Duration;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.OkHttpClient;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,8 +10,8 @@ import org.jsoup.nodes.Document;
 @Slf4j
 public class KFServingClientV1 extends KFServingClient<JSONObject> {
     @Builder
-    KFServingClientV1(final String service, final String modelName, final Duration requestReadTimeout) {
-        super(service, modelName, requestReadTimeout);
+    KFServingClientV1(final String service, final String modelName, final OkHttpClient httpClient) {
+        super(service, modelName, httpClient);
     }
 
     @Override
