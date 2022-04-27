@@ -33,7 +33,7 @@ public class KFServingClientFactoryV1 implements KFServingClientFactory {
     @Override
     public KFServingClient<JSONObject> getKFServingClient(
             final String service, final String modelName, final Duration requestReadTimeout) {
-        OkHttpClient httpClient = KFServingClientV1.getHttpClient(requestReadTimeout);
+        OkHttpClient httpClient = KFServingClient.getHttpClient(requestReadTimeout);
         return new KFServingClientV1(service, modelName, httpClient);
     }
 }
