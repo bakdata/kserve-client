@@ -41,8 +41,8 @@ import java.util.List;
 @NoArgsConstructor(force = true)
 public class InferenceResponse<T> {
     @NonNull
-    private final String model_name;
-    private final String model_version;
+    private final String modelName;
+    private final String modelVersion;
     @NonNull
     private final String id;
     private final Parameters parameters;

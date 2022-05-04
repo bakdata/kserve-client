@@ -60,7 +60,7 @@ class KServeClientV2Test {
                         .shape(List.of(1))
                         .datatype("BYTES")
                         .parameters(Parameters.builder()
-                                .content_type("str")
+                                .contentType("str")
                                 .build())
                         .build()))
                 .build();

@@ -50,7 +50,8 @@ public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
         try {
             final InferenceError inferenceError = OBJECT_MAPPER.readValue(stringBody, InferenceError.class);
             return Optional.ofNullable(inferenceError.getError())
-                    .or(() -> Optional.ofNullable(inferenceError.getDetail())) // fallback to details
+                    // fallback to details
+                    .or(() -> Optional.ofNullable(inferenceError.getDetail()))
                     .orElseThrow();
         } catch (final JsonProcessingException e) {
             throw new IllegalArgumentException("Could not process JSON error object", e);

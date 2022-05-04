@@ -101,7 +101,8 @@ public abstract class KServeClient<I> {
                     RETRY_MAX_INTERVAL);
 
             final RetryConfig retryConfig = RetryConfig.custom()
-                    .retryExceptions(IOException.class)  // may be thrown by chain.proceed(request)
+                    // IOException may be thrown by chain.proceed(request)
+                    .retryExceptions(IOException.class)
                     .maxAttempts(RETRY_MAX_ATTEMPTS)
                     .intervalFunction(intervalFn)
                     .failAfterMaxAttempts(true)
@@ -129,9 +130,8 @@ public abstract class KServeClient<I> {
     }
 
     private static ObjectMapper createObjectMapper() {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
-        return mapper;
+        return new ObjectMapper()
+                .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
     }
 
     private static String getStringBody(final Response response) throws IOException {
