@@ -4,4 +4,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'kserve-client'
+rootProject.name = "kserve-client"
