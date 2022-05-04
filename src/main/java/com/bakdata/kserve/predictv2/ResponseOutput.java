@@ -31,6 +31,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * A class to represent a <a href="https://kserve.github.io/website/modelserving/inference_api/#response-output">
+ *     response output as defined in the v2 prediction protocol</a>.
+ */
 @Data
 @Builder
 @NoArgsConstructor

@@ -31,7 +31,7 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class KServeMock {
-    protected final MockWebServer mockWebServer;
+    private final MockWebServer mockWebServer;
 
     protected KServeMock() {
         this.mockWebServer = new MockWebServer();

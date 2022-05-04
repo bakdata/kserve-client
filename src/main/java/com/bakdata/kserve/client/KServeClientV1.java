@@ -31,6 +31,9 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+/**
+ * An implementation of a {@link KServeClient} to support the v1 prediction protocol.
+ */
 @Slf4j
 public class KServeClientV1 extends KServeClient<JSONObject> {
     @Builder

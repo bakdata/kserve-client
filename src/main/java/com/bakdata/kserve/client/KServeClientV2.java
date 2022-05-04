@@ -33,6 +33,10 @@ import okhttp3.OkHttpClient;
 
 import java.util.Optional;
 
+/**
+ * An implementation of a {@link KServeClient} to support the
+ * <a href="https://kserve.github.io/website/modelserving/inference_api/">v2 prediction protocol</a>.
+ */
 @Slf4j
 public class KServeClientV2 extends KServeClient<InferenceRequest<?, ?>> {
 

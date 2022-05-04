@@ -134,12 +134,12 @@ class KServeClientV1Test {
     }
 
     @Getter
-    public static class FakePrediction {
+    private static class FakePrediction {
         private String fake;
     }
 
     @Getter
-    public static class CallCounterFakePrediction {
+    private static class CallCounterFakePrediction {
         private int counter;
     }
 }

@@ -26,6 +26,9 @@ package com.bakdata.kserve.client;
 
 import java.time.Duration;
 
+/**
+ * An interface for a factory producing a {@link KServeClient} which supports a specific protocol version.
+ */
 @FunctionalInterface
 public interface KServeClientFactory {
     KServeClient<?> getKServeClient(

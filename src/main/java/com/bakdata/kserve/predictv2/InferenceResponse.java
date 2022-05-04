@@ -30,6 +30,13 @@ import lombok.NonNull;
 
 import java.util.List;
 
+/**
+ * A class to represent an
+ * <a href="https://kserve.github.io/website/modelserving/inference_api/#inference-response-json-object">
+ *     Inference Response JSON Object as defined in the v2 prediction protocol</a>.
+ *
+ * @param <T> The type of the output {@code data} contained in a {@link ResponseOutput}.
+ */
 @Data
 @NoArgsConstructor(force = true)
 public class InferenceResponse<T> {
