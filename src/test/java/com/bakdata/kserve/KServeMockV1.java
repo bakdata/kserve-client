@@ -22,18 +22,26 @@
  * SOFTWARE.
  */
 
-package com.bakdata.kserve.client;
+package com.bakdata.kserve;
 
-import okhttp3.OkHttpClient;
-import org.json.JSONObject;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import okhttp3.mockwebserver.MockResponse;
 
-import java.time.Duration;
 
-public class KFServingClientFactoryV1 implements KFServingClientFactory {
+@Getter
+@NoArgsConstructor
+public class KServeMockV1 extends KServeMock {
     @Override
-    public KFServingClient<JSONObject> getKFServingClient(
-            final String service, final String modelName, final Duration requestReadTimeout) {
-        OkHttpClient httpClient = KFServingClient.getHttpClient(requestReadTimeout);
-        return new KFServingClientV1(service, modelName, httpClient);
+    MockResponse getModelNotFoundResponse(final String modelName) {
+        return new MockResponse().setResponseCode(404).setBody(String.format(
+                "<html>\n<title>404: Model with name model does not exist.</title>\n\n<body>404: Model with name "
+                        + "model does not exist.</body>\n\n</html>",
+                modelName, modelName));
+    }
+
+    @Override
+    String getEndpointString(final String modelName) {
+        return String.format("/v1/models/%s:predict", modelName);
     }
 }

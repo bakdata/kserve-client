@@ -49,20 +49,20 @@ import java.util.concurrent.Callable;
 
 @Slf4j
 @RequiredArgsConstructor
-public abstract class KFServingClient<I> {
+public abstract class KServeClient<I> {
 
-    private static final int RETRY_MAX_ATTEMPTS = Optional.ofNullable(System.getenv("KFSERVING_RETRY_MAX_ATTEMPTS"))
+    private static final int RETRY_MAX_ATTEMPTS = Optional.ofNullable(System.getenv("KSERVE_RETRY_MAX_ATTEMPTS"))
             .map(Integer::parseInt)
             .orElse(10);
     private static final Duration RETRY_INITIAL_INTERVAL =
-            Optional.ofNullable(System.getenv("KFSERVING_RETRY_INITIAL_INTERVAL"))
+            Optional.ofNullable(System.getenv("KSERVE_RETRY_INITIAL_INTERVAL"))
                     .map(Integer::parseInt).map(Duration::ofMillis)
                     .orElse(Duration.ofMillis(500));
-    private static final double RETRY_MULTIPLIER = Optional.ofNullable(System.getenv("KFSERVING_RETRY_MULTIPLIER"))
+    private static final double RETRY_MULTIPLIER = Optional.ofNullable(System.getenv("KSERVE_RETRY_MULTIPLIER"))
             .map(Double::parseDouble)
             .orElse(2.0);
     private static final Duration RETRY_MAX_INTERVAL =
-            Optional.ofNullable(System.getenv("KFSERVING_RETRY_MAX_INTERVAL"))
+            Optional.ofNullable(System.getenv("KSERVE_RETRY_MAX_INTERVAL"))
                     .map(Integer::parseInt).map(Duration::ofMillis)
                     .orElse(Duration.ofMillis(16000));
 
@@ -89,7 +89,7 @@ public abstract class KFServingClient<I> {
                     .intervalFunction(intervalFn)
                     .failAfterMaxAttempts(true)
                     .build();
-            final Retry retry = Retry.of("kfserving-request-retry", retryConfig);
+            final Retry retry = Retry.of("kserve-request-retry", retryConfig);
 
             final Callable<Response> requestCallable = Retry.decorateCallable(retry, () -> {
                 log.debug("Making or retrying request {}.", request);

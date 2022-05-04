@@ -22,18 +22,27 @@
  * SOFTWARE.
  */
 
-package com.bakdata.kserve.client;
+package com.bakdata.kserve;
 
-import com.bakdata.kserve.predictv2.InferenceRequest;
-import okhttp3.OkHttpClient;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import okhttp3.mockwebserver.MockResponse;
 
-import java.time.Duration;
 
-public class KFServingClientFactoryV2 implements KFServingClientFactory {
+@Getter
+@NoArgsConstructor
+public class KServeMockV2 extends KServeMock {
     @Override
-    public KFServingClient<InferenceRequest<?, ?>> getKFServingClient(
-            final String service, final String modelName, final Duration requestReadTimeout) {
-        OkHttpClient httpClient = KFServingClient.getHttpClient(requestReadTimeout);
-        return new KFServingClientV2(service, modelName, httpClient);
+    MockResponse getModelNotFoundResponse(final String modelName) {
+        return new MockResponse().setResponseCode(404).setBody(String.format(
+                "{\n"
+                        + "  \"error\": \"Model %s not found\"\n"
+                        + "}",
+                modelName));
+    }
+
+    @Override
+    String getEndpointString(final String modelName) {
+        return String.format("/v2/models/%s/infer", modelName);
     }
 }

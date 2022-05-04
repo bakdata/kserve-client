@@ -30,10 +30,10 @@ import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class KFServingMock {
+public abstract class KServeMock {
     protected final MockWebServer mockWebServer;
 
-    protected KFServingMock() {
+    protected KServeMock() {
         this.mockWebServer = new MockWebServer();
     }
 
@@ -56,14 +56,14 @@ public abstract class KFServingMock {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
-                if (KFServingMock.this.getEndpointString(modelName).equals(recordedRequest.getPath())) {
+                if (KServeMock.this.getEndpointString(modelName).equals(recordedRequest.getPath())) {
                     return new MockResponse()
                             .addHeader("Content-Type", "application/json; charset=utf-8")
                             .setBody(body)
                             .setResponseCode(200);
                 } else {
                     recordedRequest.getPath();
-                    return KFServingMock.this.getModelNotFoundResponse(modelName);
+                    return KServeMock.this.getModelNotFoundResponse(modelName);
                 }
             }
         };

@@ -24,34 +24,47 @@
 
 package com.bakdata.kserve.client;
 
+import com.bakdata.kserve.predictv2.InferenceError;
+import com.bakdata.kserve.predictv2.InferenceRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+
+import java.util.Optional;
 
 @Slf4j
-public class KFServingClientV1 extends KFServingClient<JSONObject> {
+public class KServeClientV2 extends KServeClient<InferenceRequest<?, ?>> {
+
     @Builder
-    KFServingClientV1(final String service, final String modelName, final OkHttpClient httpClient) {
+    KServeClientV2(final String service, final String modelName, final OkHttpClient httpClient) {
         super(service, modelName, httpClient);
     }
 
     @Override
     protected String extractErrorMessage(final String stringBody) {
-        final Document htmlResponse = Jsoup.parse(stringBody);
-        return htmlResponse.select("title").first().text();
+        try {
+            final InferenceError inferenceError = OBJECT_MAPPER.readValue(stringBody, InferenceError.class);
+            return Optional.ofNullable(inferenceError.getError())
+                    .or(() -> Optional.ofNullable(inferenceError.getDetail())) // fallback to details
+                    .orElseThrow();
+        } catch (final JsonProcessingException e) {
+            throw new IllegalArgumentException("Could not process JSON error object", e);
+        }
     }
 
     @Override
     protected String getUrlString(final String service, final String modelName) {
-        return String.format("http://%s/v1/models/%s:predict", service, modelName);
+        return String.format("http://%s/v2/models/%s/infer", service, modelName);
     }
 
     @Override
-    String getBodyString(final JSONObject inputObject) {
-        return inputObject.toString();
+    String getBodyString(final InferenceRequest<?, ?> inputObject) {
+        try {
+            return OBJECT_MAPPER.writeValueAsString(inputObject);
+        } catch (final JsonProcessingException e) {
+            throw new IllegalArgumentException("Could not process inference request body", e);
+        }
     }
 
 }
