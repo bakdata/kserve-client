@@ -31,6 +31,18 @@ import java.time.Duration;
  */
 @FunctionalInterface
 public interface KServeClientFactory {
+    /**
+     * Get a {@link KServeClient} to make requests to an inference service supporting either the v1 or the v2 prediction
+     * protocol.
+     *
+     * @param service The host name of the service, e.g. "my-classifier.kserve-namespace.svc.cluster.local"
+     * @param modelName The model name as specified in model-settings.json or as key metadata.name in the
+     *                  InferenceService k8s object configuration file.
+     * @param requestReadTimeout The read time out as documented for the
+     * <a href="https://square.github.io/okhttp/4.x/okhttp/okhttp3/-ok-http-client/-builder/read-timeout/">OkHttpClient
+     *                           </a> which this library uses
+     * @return An instance of {@link KServeClient}
+     */
     KServeClient<?> getKServeClient(
             final String service, final String modelName, final Duration requestReadTimeout);
 }

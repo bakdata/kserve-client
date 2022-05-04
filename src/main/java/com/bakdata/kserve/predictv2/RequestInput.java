@@ -33,7 +33,7 @@ import java.util.List;
  * A class to represent a <a href="https://kserve.github.io/website/modelserving/inference_api/#request-input">
  *     request input as defined in the v2 prediction protocol</a>.
  *
- * @param <T> The type of the input @code data}.
+ * @param <T> The type of the input {@code data}.
  */
 @Data
 @Builder

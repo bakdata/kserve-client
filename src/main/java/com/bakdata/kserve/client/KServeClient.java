@@ -61,6 +61,8 @@ import java.util.concurrent.Callable;
  *     back off.</li>
  *     <li>KSERVE_RETRY_MAX_INTERVAL: A limit to which the retry interval will be capped. </li>
  * </ul>
+ *
+ * @param <I> The type of the {@code inputObject} that contains the data for which a prediction should be made
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -147,7 +149,7 @@ public abstract class KServeClient<I> {
     /**
      * Make a request to a KServe inference service and return the response.
      *
-     * @param inputObject An input object of type I which contains the data for which a prediction should be made
+     * @param inputObject An input object of type {@link I} that contains the data for which a prediction should be made
      * @param responseType A class which extends T. The inference service JSON response will be mapped to an object of
      *                    this class
      * @param modelNameSuffix A suffix for the model name to use in case a model is deployed multiple times with
