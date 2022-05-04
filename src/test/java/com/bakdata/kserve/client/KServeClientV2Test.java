@@ -52,8 +52,8 @@ class KServeClientV2Test {
     @InjectSoftAssertions
     private SoftAssertions softly;
 
-    private static InferenceRequest<String, String> getFakeInferenceRequest(final String data) {
-        return InferenceRequest.<String, String>builder()
+    private static InferenceRequest<String> getFakeInferenceRequest(final String data) {
+        return InferenceRequest.<String>builder()
                 .inputs(List.of(RequestInput.<String>builder()
                         .name("tokenize")
                         .data(data)
@@ -96,7 +96,7 @@ class KServeClientV2Test {
                 .modelName("fake-model")
                 .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(10000)))
                 .build();
-        final InferenceRequest<String, String> fakeInferenceRequest = getFakeInferenceRequest("data");
+        final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, "") )
                 .isInstanceOf(InferenceRequestException.class)
                 .hasMessage("Inference request failed: Model test-model not found");
@@ -121,7 +121,7 @@ class KServeClientV2Test {
                 .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
-        final InferenceRequest<String, String> fakeInferenceRequest = getFakeInferenceRequest("data");
+        final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
                 .hasMessage("Inference request failed: Not Found");
@@ -138,7 +138,7 @@ class KServeClientV2Test {
                 .modelName("test-model")
                 .build();
 
-        final InferenceRequest<String, String> fakeInferenceRequest = getFakeInferenceRequest("data");
+        final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
         this.softly.assertThat(client.makeInferenceRequest(fakeInferenceRequest,
                 CallCounterFakePrediction.class, ""))
                 .hasValueSatisfying(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(2));

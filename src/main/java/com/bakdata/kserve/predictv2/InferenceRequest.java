@@ -37,11 +37,10 @@ import java.util.List;
  *     Inference Request JSON Object as defined in the v2 prediction protocol</a>.
  *
  * @param <I> The type of the input {@code data} contained in a {@link RequestInput}.
- * @param <O> The type of the output {@code data} contained in a {@link RequestOutput}.
  */
 @Value
 @Builder
-public class InferenceRequest<I, O> {
+public class InferenceRequest<I> {
     String id;
     Parameters parameters;
     @NonNull
@@ -49,5 +48,5 @@ public class InferenceRequest<I, O> {
     List<RequestInput<I>> inputs = Collections.emptyList();
     @NonNull
     @Builder.Default
-    List<RequestOutput<O>> outputs = Collections.emptyList();
+    List<RequestOutput> outputs = Collections.emptyList();
 }

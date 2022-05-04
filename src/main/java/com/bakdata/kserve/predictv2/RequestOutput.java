@@ -27,14 +27,13 @@ package com.bakdata.kserve.predictv2;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-
+/**
+ * A class to represent a <a href="https://kserve.github.io/website/modelserving/inference_api/#request-output">
+ *     request output as defined in the v2 prediction protocol</a>.
+ */
 @Data
 @Builder
-public class RequestOutput<T> {
+public class RequestOutput {
     private String name;
-    private List<Integer> shape;
-    private String datatype;
     private Parameters parameters;
-    private T data;
 }

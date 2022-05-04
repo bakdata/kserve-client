@@ -38,7 +38,7 @@ import java.util.Optional;
  * <a href="https://kserve.github.io/website/modelserving/inference_api/">v2 prediction protocol</a>.
  */
 @Slf4j
-public class KServeClientV2 extends KServeClient<InferenceRequest<?, ?>> {
+public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
 
     @Builder
     KServeClientV2(final String service, final String modelName, final OkHttpClient httpClient) {
@@ -63,7 +63,7 @@ public class KServeClientV2 extends KServeClient<InferenceRequest<?, ?>> {
     }
 
     @Override
-    String getBodyString(final InferenceRequest<?, ?> inputObject) {
+    String getBodyString(final InferenceRequest<?> inputObject) {
         try {
             return OBJECT_MAPPER.writeValueAsString(inputObject);
         } catch (final JsonProcessingException e) {
