@@ -30,6 +30,8 @@ import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public abstract class KServeMock {
     private final MockWebServer mockWebServer;
 
@@ -71,20 +73,19 @@ public abstract class KServeMock {
     }
 
     public void setUpForRetryTest() {
-        final int[] callCounter = {0};
+        final AtomicInteger callCounter = new AtomicInteger();
         final Dispatcher dispatcher = new Dispatcher() {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) throws InterruptedException {
-                callCounter[0]++;
-                if (callCounter[0] == 1) {
+                if (callCounter.getAndIncrement() == 0) {
                     // Force request abortion because of 1s read timeout
                     Thread.sleep(2000);
                     return new MockResponse().setResponseCode(400).setBody(
                             "<html>\n<title>400: request should be aborted before responding</title>\n\n"
                                     + "<body>400</body>\n\n</html>");
                 }
-                return new MockResponse().setResponseCode(200).setBody("{ \"counter\": " + callCounter[0] + "}");
+                return new MockResponse().setResponseCode(200).setBody("{ \"counter\": " + callCounter + "}");
             }
         };
         this.mockWebServer.setDispatcher(dispatcher);
