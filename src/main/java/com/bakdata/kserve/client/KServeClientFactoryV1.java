@@ -32,7 +32,7 @@ import java.time.Duration;
 /**
  * A factory producing a {@link KServeClient} to support the v1 prediction protocol.
  */
-public class KServeClientFactoryV1 implements KServeClientFactory {
+public class KServeClientFactoryV1 implements KServeClientFactory<JSONObject> {
     @Override
     public KServeClient<JSONObject> getKServeClient(
             final String service, final String modelName, final Duration requestReadTimeout) {

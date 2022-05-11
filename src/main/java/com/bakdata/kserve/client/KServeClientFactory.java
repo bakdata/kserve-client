@@ -28,9 +28,11 @@ import java.time.Duration;
 
 /**
  * An interface for a factory producing a {@link KServeClient} which supports a specific protocol version.
+ *
+ * @param <T> The type of the input object to a request
  */
 @FunctionalInterface
-public interface KServeClientFactory {
+public interface KServeClientFactory<T> {
     /**
      * Get a {@link KServeClient} to make requests to an inference service supporting either the v1 or the v2 prediction
      * protocol.
@@ -43,6 +45,6 @@ public interface KServeClientFactory {
      *                           </a> which this library uses
      * @return An instance of {@link KServeClient}
      */
-    KServeClient<?> getKServeClient(
+    KServeClient<T> getKServeClient(
             final String service, final String modelName, final Duration requestReadTimeout);
 }

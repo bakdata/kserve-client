@@ -33,7 +33,7 @@ import java.time.Duration;
  * A factory producing a {@link KServeClient} to support the
  * <a href="https://kserve.github.io/website/modelserving/inference_api/">v2 prediction protocol</a>.
  */
-public class KServeClientFactoryV2 implements KServeClientFactory {
+public class KServeClientFactoryV2 implements KServeClientFactory<InferenceRequest<?>> {
     @Override
     public KServeClient<InferenceRequest<?>> getKServeClient(
             final String service, final String modelName, final Duration requestReadTimeout) {
