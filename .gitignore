@@ -1,8 +1,6 @@
 ##############################
 ## Project-specific
 ##############################
-# auto-generated (:task generateAvroClasses) Dto class + dependencies
-src/main/java/com/bayer/nlp/schemas
 # avro-tools is downloaded by :task downloadAvroTools
 avro-tools-1.9.1.jar
 avro-tools-*.jar
