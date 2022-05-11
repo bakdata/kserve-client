@@ -36,7 +36,7 @@ public class KServeClientFactoryV1 implements KServeClientFactory<JSONObject> {
     @Override
     public KServeClient<JSONObject> getKServeClient(
             final String service, final String modelName, final Duration requestReadTimeout) {
-        OkHttpClient httpClient = KServeClient.getHttpClient(requestReadTimeout);
+        final OkHttpClient httpClient = KServeClient.getHttpClient(requestReadTimeout);
         return new KServeClientV1(service, modelName, httpClient);
     }
 }

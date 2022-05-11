@@ -116,7 +116,7 @@ public abstract class KServeClient<I> {
 
             try {
                 return requestCallable.call();
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new IOException(e);
             }
         }

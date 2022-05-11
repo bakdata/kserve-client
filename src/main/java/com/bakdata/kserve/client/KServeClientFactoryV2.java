@@ -37,7 +37,7 @@ public class KServeClientFactoryV2 implements KServeClientFactory<InferenceReque
     @Override
     public KServeClient<InferenceRequest<?>> getKServeClient(
             final String service, final String modelName, final Duration requestReadTimeout) {
-        OkHttpClient httpClient = KServeClient.getHttpClient(requestReadTimeout);
+        final OkHttpClient httpClient = KServeClient.getHttpClient(requestReadTimeout);
         return new KServeClientV2(service, modelName, httpClient);
     }
 }

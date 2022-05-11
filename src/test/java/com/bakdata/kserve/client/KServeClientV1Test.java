@@ -53,7 +53,7 @@ class KServeClientV1Test {
     }
 
     @Test
-    void makeInferenceRequest() throws IOException, InterruptedException {
+    void makeInferenceRequest() throws IOException {
         this.mockServer.setModelEndpoint("test-model", "{ \"fake\": \"data\"}");
 
         final KServeClientV1 client = KServeClientV1.builder()
@@ -114,7 +114,7 @@ class KServeClientV1Test {
     }
 
     @Test
-    void testRetry() throws IOException, InterruptedException {
+    void testRetry() throws IOException {
         this.mockServer.setUpForRetryTest();
 
         final KServeClientV1 client = KServeClientV1.builder()
