@@ -14,7 +14,6 @@ resources:
     - repository: templates
       type: github
       name: bakdata/bakdata-project-templates
-      ref: fix/azure-pipeline-default-branch
       endpoint: bot
 
 jobs:
