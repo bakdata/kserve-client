@@ -44,6 +44,7 @@ This inference service knows how to deal with the fields defined in `TextToTrans
 
 A usage example compatible with protocol version v1 can be constructed analogously using the `KServeClientFactoryV1` class.
 
+\
 `TextToTranslate.java`
 ```java
 @Data
@@ -55,6 +56,7 @@ public class TextToTranslate {
 }
 ```
 
+\
 `Translation.java`
 ```java
 @Data
@@ -67,12 +69,14 @@ public class Translation {
 }
 ```
 
+\
 `TranslatorResponse.java`
 ```java
 public class TranslatorResponse extends InferenceResponse<Translation> {
 }
 ```
 
+\
 `KServeRequester.java`
 ```java
 public class KServeRequester<I, O> {
@@ -100,6 +104,7 @@ public class KServeRequester<I, O> {
 }
 ```
 
+\
 `App.java`
 ```java
 public class App {
