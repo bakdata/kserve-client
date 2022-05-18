@@ -3,10 +3,6 @@ trigger:
     include:
       - refs/heads/*
       - refs/tags/*
-pr:
-  branches:
-    include:
-      - main
 
 variables:
   - group: sonarqube
