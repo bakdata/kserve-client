@@ -52,7 +52,7 @@ public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
             return Optional.ofNullable(inferenceError.getError())
                     // fallback to details
                     .or(() -> Optional.ofNullable(inferenceError.getDetail()))
-                    .orElseThrow();
+                    .orElseThrow(() -> new InferenceRequestException("Could not extract error message."));
         } catch (final JsonProcessingException e) {
             throw new IllegalArgumentException("Could not process JSON error object", e);
         }

@@ -45,14 +45,6 @@ public abstract class KServeMock {
         return this.mockWebServer.getHostName() + ":" + this.mockWebServer.getPort();
     }
 
-    public String getBaseEndpoint() {
-        return ":" + this.mockWebServer.getPort();
-    }
-
-    public String getServiceName() {
-        return this.mockWebServer.getHostName();
-    }
-
     public void setModelEndpoint(final String modelName, final String body) {
         final Dispatcher dispatcher = new Dispatcher() {
             @NotNull
@@ -93,7 +85,7 @@ public abstract class KServeMock {
 
     abstract String getEndpointString(final String modelName);
 
-    public okhttp3.mockwebserver.MockWebServer getMockWebServer() {
+    public MockWebServer getMockWebServer() {
         return this.mockWebServer;
     }
 }
