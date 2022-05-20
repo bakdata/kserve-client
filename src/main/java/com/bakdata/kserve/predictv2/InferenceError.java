@@ -24,16 +24,17 @@
 
 package com.bakdata.kserve.predictv2;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 import lombok.Value;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * A class to which error information from the response's JSON body is mapped in case the inference service responds
  * with 404 not found or 400 bad request.
  */
 @Value
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
+@Jacksonized
+@Builder
 public class InferenceError {
     String error;
     String detail;

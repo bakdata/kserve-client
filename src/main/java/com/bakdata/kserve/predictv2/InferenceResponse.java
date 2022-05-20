@@ -24,9 +24,10 @@
 
 package com.bakdata.kserve.predictv2;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Value;
+import lombok.experimental.NonFinal;
 
 import java.util.List;
 
@@ -37,15 +38,16 @@ import java.util.List;
  *
  * @param <T> The type of the output {@code data} contained in a {@link ResponseOutput}.
  */
-@Data
+@NonFinal
+@Value
 @NoArgsConstructor(force = true)
 public class InferenceResponse<T> {
     @NonNull
-    private final String modelName;
-    private final String modelVersion;
+    String modelName;
+    String modelVersion;
     @NonNull
-    private final String id;
-    private final Parameters parameters;
+    String id;
+    Parameters parameters;
     @NonNull
-    private final List<ResponseOutput<T>> outputs;
+    List<ResponseOutput<T>> outputs;
 }
