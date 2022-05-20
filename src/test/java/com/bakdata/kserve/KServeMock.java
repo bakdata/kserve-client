@@ -33,11 +33,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class KServeMock {
-    private final MockWebServer mockWebServer;
-
-    protected KServeMock() {
-        this.mockWebServer = new MockWebServer();
-    }
+    private final MockWebServer mockWebServer = new MockWebServer();
 
     abstract MockResponse getModelNotFoundResponse(String modelName);
 
