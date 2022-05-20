@@ -43,8 +43,9 @@ public interface KServeClientFactory<T> {
      * @param requestReadTimeout The read time out as documented for the
      * <a href="https://square.github.io/okhttp/4.x/okhttp/okhttp3/-ok-http-client/-builder/read-timeout/">OkHttpClient
      *                           </a> which this library uses
+     * @param httpsEnabled Whether HTTPS should be used (true) or HTTP (false)
      * @return An instance of {@link KServeClient}
      */
     KServeClient<T> getKServeClient(
-            final String service, final String modelName, final Duration requestReadTimeout);
+            final String service, final String modelName, final Duration requestReadTimeout, final boolean httpsEnabled);
 }

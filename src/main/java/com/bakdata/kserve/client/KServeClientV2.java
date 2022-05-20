@@ -41,8 +41,8 @@ import java.util.Optional;
 public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
 
     @Builder
-    KServeClientV2(final String service, final String modelName, final OkHttpClient httpClient) {
-        super(service, modelName, httpClient);
+    KServeClientV2(final String service, final String modelName, final OkHttpClient httpClient, final boolean httpsEnabled) {
+        super(service, modelName, httpClient, httpsEnabled);
     }
 
     @Override
@@ -59,8 +59,8 @@ public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
     }
 
     @Override
-    protected String getUrlString(final String service, final String modelName) {
-        return String.format("http://%s/v2/models/%s/infer", service, modelName);
+    protected String getUrlString(final String protocol, final String service, final String modelName) {
+        return String.format("%s://%s/v2/models/%s/infer", protocol, service, modelName);
     }
 
     @Override

@@ -37,8 +37,8 @@ import org.jsoup.nodes.Document;
 @Slf4j
 public class KServeClientV1 extends KServeClient<JSONObject> {
     @Builder
-    KServeClientV1(final String service, final String modelName, final OkHttpClient httpClient) {
-        super(service, modelName, httpClient);
+    KServeClientV1(final String service, final String modelName, final OkHttpClient httpClient, final boolean httpsEnabled) {
+        super(service, modelName, httpClient, httpsEnabled);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class KServeClientV1 extends KServeClient<JSONObject> {
     }
 
     @Override
-    protected String getUrlString(final String service, final String modelName) {
-        return String.format("http://%s/v1/models/%s:predict", service, modelName);
+    protected String getUrlString(final String protocol, final String service, final String modelName) {
+        return String.format("%s://%s/v1/models/%s:predict", protocol, service, modelName);
     }
 
     @Override

@@ -36,8 +36,8 @@ import java.time.Duration;
 public class KServeClientFactoryV2 implements KServeClientFactory<InferenceRequest<?>> {
     @Override
     public KServeClient<InferenceRequest<?>> getKServeClient(
-            final String service, final String modelName, final Duration requestReadTimeout) {
+            final String service, final String modelName, final Duration requestReadTimeout, final boolean httpsEnabled) {
         final OkHttpClient httpClient = KServeClient.getHttpClient(requestReadTimeout);
-        return new KServeClientV2(service, modelName, httpClient);
+        return new KServeClientV2(service, modelName, httpClient, httpsEnabled);
     }
 }
