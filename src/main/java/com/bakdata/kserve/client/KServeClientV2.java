@@ -41,7 +41,8 @@ import java.util.Optional;
 public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
 
     @Builder
-    KServeClientV2(final String service, final String modelName, final OkHttpClient httpClient, final boolean httpsEnabled) {
+    KServeClientV2(
+            final String service, final String modelName, final OkHttpClient httpClient, final boolean httpsEnabled) {
         super(service, modelName, httpClient, httpsEnabled);
     }
 

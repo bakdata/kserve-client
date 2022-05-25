@@ -37,7 +37,8 @@ import org.jsoup.nodes.Document;
 @Slf4j
 public class KServeClientV1 extends KServeClient<JSONObject> {
     @Builder
-    KServeClientV1(final String service, final String modelName, final OkHttpClient httpClient, final boolean httpsEnabled) {
+    KServeClientV1(
+            final String service, final String modelName, final OkHttpClient httpClient, final boolean httpsEnabled) {
         super(service, modelName, httpClient, httpsEnabled);
     }
 

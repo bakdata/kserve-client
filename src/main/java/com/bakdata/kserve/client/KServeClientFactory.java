@@ -47,5 +47,8 @@ public interface KServeClientFactory<T> {
      * @return An instance of {@link KServeClient}
      */
     KServeClient<T> getKServeClient(
-            final String service, final String modelName, final Duration requestReadTimeout, final boolean httpsEnabled);
+            final String service,
+            final String modelName,
+            final Duration requestReadTimeout,
+            final boolean httpsEnabled);
 }
