@@ -86,7 +86,8 @@ public class KServeRequester<I, O> {
         this.kServeClient = (KServeClient<I>) new KServeClientFactoryV2().getKServeClient(
                 "localhost:8080",
                 "argos-translator-en-es",
-                Duration.ofSeconds(2)
+                Duration.ofSeconds(2),
+                false
         );
     }
 
@@ -107,8 +108,8 @@ public class KServeRequester<I, O> {
 \
 `App.java`
 ```java
-public class App {
-    private static Translation getTranslation(TextToTranslate input) {
+public final class App {
+    private static Translation getTranslation(final TextToTranslate input) {
         return new KServeRequester<InferenceRequest<TextToTranslate>, TranslatorResponse>()
                 .requestInferenceService(InferenceRequest.<TextToTranslate>builder()
                         .inputs(List.of(
@@ -132,8 +133,8 @@ public class App {
                 .orElseThrow();
     }
 
-    public static void main(String[] args) {
-        Translation translation = getTranslation(TextToTranslate.builder().textToTranslate("Hello World").build());
+    public static void main(final String[] args) {
+        final Translation translation = getTranslation(TextToTranslate.builder().textToTranslate("Hello World").build());
         System.out.println(translation.getTranslatedText());
         // Hola Mundo
     }
