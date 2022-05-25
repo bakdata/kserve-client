@@ -38,7 +38,15 @@ public abstract class KServeMock {
     abstract MockResponse getModelNotFoundResponse(String modelName);
 
     public String getWholeServiceEndpoint() {
-        return this.mockWebServer.getHostName() + ":" + this.mockWebServer.getPort();
+        return getServiceName() + getBaseEndpoint();
+    }
+
+    public String getBaseEndpoint() {
+        return ":" + this.mockWebServer.getPort();
+    }
+
+    public String getServiceName() {
+        return this.mockWebServer.getHostName();
     }
 
     public void setModelEndpoint(final String modelName, final String body) {
