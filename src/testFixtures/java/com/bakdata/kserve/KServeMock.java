@@ -40,7 +40,7 @@ public abstract class KServeMock {
     abstract MockResponse getModelNotFoundResponse(String modelName);
 
     public String getWholeServiceEndpoint() {
-        return getServiceName() + getBaseEndpoint();
+        return this.getServiceName() + this.getBaseEndpoint();
     }
 
     public String getBaseEndpoint() {
