@@ -7,6 +7,7 @@ plugins {
     id("com.bakdata.sonatype") version "1.1.7"
     id("org.hildan.github.changelog") version "0.8.0"
     id("io.freefair.lombok") version "5.3.3.3"
+    id("java-test-fixtures")
 }
 
 group = "com.bakdata.kserve"
@@ -37,8 +38,9 @@ dependencies {
     val junitVersion: String by project
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
     testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
-    testImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)
     testImplementation(group = "org.assertj", name = "assertj-core", version = "3.22.0")
+
+    testFixturesImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)
 }
 
 configure<com.bakdata.gradle.SonatypeSettings> {
