@@ -24,6 +24,7 @@
 
 package com.bakdata.kserve;
 
+import lombok.Getter;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -33,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class KServeMock {
+    @Getter
     private final MockWebServer mockWebServer = new MockWebServer();
 
     abstract MockResponse getModelNotFoundResponse(String modelName);
@@ -88,8 +90,4 @@ public abstract class KServeMock {
     }
 
     abstract String getEndpointString(final String modelName);
-
-    public MockWebServer getMockWebServer() {
-        return this.mockWebServer;
-    }
 }

@@ -166,15 +166,18 @@ public abstract class KServeClient<I> {
             throws IOException {
         final Request httpRequest = getRequest(
                 this.getBodyString(inputObject),
-                this.getModelURI(this.httpsEnabled, this.service, String.format("%s%s", this.modelName, modelNameSuffix)));
+                this.getModelURI(modelNameSuffix));
         final Response response = this.executeRequest(httpRequest);
         return this.processResponse(response, responseType);
     }
 
     protected abstract String extractErrorMessage(String stringBody);
 
-    protected final HttpUrl getModelURI(final boolean httpsEnabled, final String service, final String modelName) {
-        return HttpUrl.get(this.getUrlString(httpsEnabled ? "https" : "http", service, modelName));
+    protected final HttpUrl getModelURI(final String modelNameSuffix) {
+        return HttpUrl.get(this.getUrlString(
+                this.httpsEnabled ? "https" : "http",
+                this.service,
+                String.format("%s%s", this.modelName, modelNameSuffix)));
     }
 
     protected abstract String getUrlString(String protocol, String service, String modelName);
