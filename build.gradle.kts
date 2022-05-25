@@ -39,6 +39,7 @@ dependencies {
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
     testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
     testImplementation(group = "org.assertj", name = "assertj-core", version = "3.22.0")
+    testImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)
 
     testFixturesImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)
 }
