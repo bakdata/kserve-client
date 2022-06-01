@@ -1,3 +1,6 @@
+import net.researchgate.release.GitAdapter.GitConfig
+import net.researchgate.release.ReleaseExtension
+
 description = "A Java client for KServe inference services."
 
 plugins {
@@ -66,4 +69,12 @@ configure<org.hildan.github.changelog.plugin.GitHubChangelogExtension> {
     githubRepository = "kserve-client"
     futureVersionTag = findProperty("changelog.releaseVersion")?.toString()
     sinceTag = findProperty("changelog.sinceTag")?.toString()
+}
+
+fun ReleaseExtension.git(configure: GitConfig.() -> Unit) = (getProperty("git") as GitConfig).configure()
+
+release {
+    git {
+        requireBranch = "main"
+    }
 }
