@@ -30,8 +30,8 @@ configure<JavaPluginConvention> {
 }
 
 dependencies {
-    implementation(group = "org.jsoup", name = "jsoup", version = "1.13.1")
-    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.12.5")
+    implementation(group = "org.jsoup", name = "jsoup", version = "1.15.1")
+    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.13.3")
     val okHttpVersion: String by project
     implementation(group = "com.squareup.okhttp3", name = "okhttp", version = okHttpVersion)
     implementation(group = "org.json", name = "json", version = "20211205")
