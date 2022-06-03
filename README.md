@@ -20,13 +20,13 @@ You can add kserve-client via Maven Central.
 
 #### Gradle
 ```gradle
-compile group: 'com.bakdata', name: 'kserve-client', version: '1.0.1'
+compile group: 'com.bakdata.kserve', name: 'kserve-client', version: '1.0.1'
 ```
 
 #### Maven
 ```xml
 <dependency>
-    <groupId>com.bakdata</groupId>
+    <groupId>com.bakdata.kserve</groupId>
     <artifactId>kserve-client</artifactId>
     <version>1.0.1</version>
 </dependency>
