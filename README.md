@@ -33,7 +33,7 @@ compile group: 'com.bakdata', name: 'kserve-client', version: '1.0.1'
 ```
 
 
-For other build tools or versions, refer to the [latest version in MvnRepository](https://mvnrepository.com/artifact/com.bakdata.kserve-client/kserve-client/latest).
+For other build tools or versions, refer to the [latest version in MvnRepository](https://mvnrepository.com/artifact/com.bakdata.kserve/kserve-client/latest).
 
 ### Usage
 
