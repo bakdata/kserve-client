@@ -12,7 +12,7 @@ It let's you easily configure the endpoint of the inference service which should
 The data shape of both the request and response can be modeled using Java classes. 
 The library includes a retry mechanism to automatically retry requests to the inference service in case it's scaled to zero upon the first request.
 
-You can find a [blog post on medium](https://medium.com/bakdata/xxx) where the kserve-client is used in the demo application.
+You can find a [blog post on medium](https://medium.com/bakdata/scalable-machine-learning-with-kafka-streams-and-kserve-85308858d867) where the kserve-client is used in the demo application.
 
 ## Getting Started
 
@@ -37,7 +37,7 @@ For other build tools or versions, refer to the [latest version in MvnRepository
 
 ### Usage
 
-This usage example is extracted from a [blog post on medium](https://medium.com/bakdata/xxx) where the kserve-client is used. In the inference service, we use an [Argos Translate](https://github.com/argosopentech/argos-translate) model to obtain a translation for an input text.
+This usage example is extracted from a [blog post on medium](https://medium.com/bakdata/scalable-machine-learning-with-kafka-streams-and-kserve-85308858d867) where the kserve-client is used. In the inference service, we use an [Argos Translate](https://github.com/argosopentech/argos-translate) model to obtain a translation for an input text.
 
 A KServe inference service supporting the [protocol version v2](https://kserve.github.io/website/modelserving/inference_api) is expected to run on `localhost:8080` with model `argos-translator-en-es` so that the endpoint `localhost:8080/v2/models/argos-translator-en-es/infer` can be used for requests.
 This inference service knows how to deal with the fields defined in `TextToTranslate.java` and `Translation.java` for the request input and output data, respectively.
