@@ -32,7 +32,7 @@ dependencies {
     val okHttpVersion: String by project
     implementation(group = "com.squareup.okhttp3", name = "okhttp", version = okHttpVersion)
     implementation(group = "org.json", name = "json", version = "20231013")
-    implementation(group = "io.github.resilience4j", name = "resilience4j-retry", version = "2.2.0")
+    implementation(group = "io.github.resilience4j", name = "resilience4j-retry", version = "1.7.1")
     implementation(group = "org.slf4j", name = "slf4j-api", version = "2.0.10")
 
     val junitVersion: String by project
