@@ -1,15 +1,12 @@
-import net.researchgate.release.GitAdapter.GitConfig
-import net.researchgate.release.ReleaseExtension
-
 description = "A Java client for KServe inference services."
 
 plugins {
     `java-library`
-    id("net.researchgate.release") version "2.8.1"
-    id("com.bakdata.sonar") version "1.1.7"
-    id("com.bakdata.sonatype") version "1.1.7"
-    id("org.hildan.github.changelog") version "0.8.0"
-    id("io.freefair.lombok") version "5.3.3.3"
+    id("net.researchgate.release") version "3.0.2"
+    id("com.bakdata.sonar") version "1.1.9"
+    id("com.bakdata.sonatype") version "1.1.9"
+    id("org.hildan.github.changelog") version "1.12.1"
+    id("io.freefair.lombok") version "6.6.3"
     id("java-test-fixtures")
 }
 
@@ -24,24 +21,24 @@ repositories {
     mavenCentral()
 }
 
-configure<JavaPluginConvention> {
+configure<JavaPluginExtension> {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
-    implementation(group = "org.jsoup", name = "jsoup", version = "1.15.1")
-    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.13.3")
+    implementation(group = "org.jsoup", name = "jsoup", version = "1.17.2")
+    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.16.1")
     val okHttpVersion: String by project
     implementation(group = "com.squareup.okhttp3", name = "okhttp", version = okHttpVersion)
-    implementation(group = "org.json", name = "json", version = "20211205")
+    implementation(group = "org.json", name = "json", version = "20231013")
     implementation(group = "io.github.resilience4j", name = "resilience4j-retry", version = "1.7.1")
-    implementation(group = "org.slf4j", name = "slf4j-api", version = "1.7.25")
+    implementation(group = "org.slf4j", name = "slf4j-api", version = "2.0.10")
 
     val junitVersion: String by project
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
     testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
-    testImplementation(group = "org.assertj", name = "assertj-core", version = "3.22.0")
+    testImplementation(group = "org.assertj", name = "assertj-core", version = "3.25.1")
     testImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)
 
     testFixturesImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)
@@ -69,12 +66,4 @@ configure<org.hildan.github.changelog.plugin.GitHubChangelogExtension> {
     githubRepository = "kserve-client"
     futureVersionTag = findProperty("changelog.releaseVersion")?.toString()
     sinceTag = findProperty("changelog.sinceTag")?.toString()
-}
-
-fun ReleaseExtension.git(configure: GitConfig.() -> Unit) = (getProperty("git") as GitConfig).configure()
-
-release {
-    git {
-        requireBranch = "main"
-    }
 }
