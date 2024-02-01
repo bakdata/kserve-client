@@ -28,8 +28,8 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * A class to represent <a href="https://kserve.github.io/website/modelserving/inference_api/#parameters">
- *     parameters as defined in the v2 prediction protocol</a>.
+ * A class to represent <a href="https://kserve.github.io/website/modelserving/inference_api/#parameters"> parameters as
+ * defined in the v2 prediction protocol</a>.
  */
 @Data
 @Builder
