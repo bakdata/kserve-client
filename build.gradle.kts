@@ -6,8 +6,8 @@ description = "A Java client for KServe inference services."
 plugins {
     `java-library`
     id("net.researchgate.release") version "2.8.1"
-    id("com.bakdata.sonar") version "1.1.7"
-    id("com.bakdata.sonatype") version "1.1.7"
+    id("com.bakdata.sonar") version "1.1.11"
+    id("com.bakdata.sonatype") version "1.1.11"
     id("org.hildan.github.changelog") version "0.8.0"
     id("io.freefair.lombok") version "5.3.3.3"
     id("java-test-fixtures")
