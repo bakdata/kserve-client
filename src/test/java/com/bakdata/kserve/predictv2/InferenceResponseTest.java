@@ -57,6 +57,8 @@ public class InferenceResponseTest {
         byte[] resourceFileBytes = getClass().getClassLoader().getResourceAsStream(jsonFilePath).readAllBytes();
         String jsonInferenceResponse = new String(resourceFileBytes);
 
-        this.objectMapper.readValue(jsonInferenceResponse, InferenceResponse.class);
+        this.softly.assertThatCode(() -> {
+            this.objectMapper.readValue(jsonInferenceResponse, InferenceResponse.class);
+        }).doesNotThrowAnyException();
     }
 }
