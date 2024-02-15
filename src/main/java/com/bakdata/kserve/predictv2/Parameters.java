@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2024 bakdata GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,19 @@
 
 package com.bakdata.kserve.predictv2;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * A class to represent <a href="https://kserve.github.io/website/modelserving/inference_api/#parameters">
- *     parameters as defined in the v2 prediction protocol</a>.
+ * A class to represent <a href="https://kserve.github.io/website/modelserving/inference_api/#parameters"> parameters as
+ * defined in the v2 prediction protocol</a>.
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Parameters {
     private String contentType;
     private Object extra;

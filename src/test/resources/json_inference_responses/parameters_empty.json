@@ -1,0 +1,19 @@
+{
+  "model_name": "fake-model-name",
+  "model_version": "1.0.0",
+  "id": "d26ad6e7-0cd7-4f37-b463-0409d9246b43",
+  "parameters": {},
+  "outputs": [
+    {
+      "name": "fake-output-name",
+      "shape": [
+        1
+      ],
+      "datatype": "object",
+      "parameters": null,
+      "data": {
+        "output": "fake output"
+      }
+    }
+  ]
+}
