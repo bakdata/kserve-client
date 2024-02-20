@@ -1,4 +1,6 @@
 # Change Log
+- no changes!
+
 
 ## [1.0.2](https://github.com/bakdata/kserve-client/tree/1.0.2) (2024-01-26)
 [View commits](https://github.com/bakdata/kserve-client/compare/1.0.1...1.0.2)
