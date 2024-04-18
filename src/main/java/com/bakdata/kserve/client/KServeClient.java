@@ -32,6 +32,7 @@ import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.Callable;
@@ -82,10 +83,9 @@ public abstract class KServeClient<I> {
             Optional.ofNullable(System.getenv("KSERVE_RETRY_MAX_INTERVAL"))
                     .map(Integer::parseInt).map(Duration::ofMillis)
                     .orElse(Duration.ofMillis(16000));
-    private final String service;
+    private final URL serviceBaseUrl;
     private final String modelName;
     private final OkHttpClient httpClient;
-    private final boolean httpsEnabled;
 
     protected static OkHttpClient getHttpClient(final Duration requestReadTimeout) {
         return new OkHttpClient.Builder()
@@ -124,16 +124,17 @@ public abstract class KServeClient<I> {
     /**
      * Make a request to a KServe inference service and return the response.
      *
-     * @param inputObject An input object of type {@link I} that contains the data for which a prediction should be made
+     * @param inputObject An input object of type {@link I} that contains the data for which a prediction should be
+     * made
      * @param responseType A class which extends T. The inference service JSON response will be mapped to an object of
-     *                    this class
+     * this class
      * @param modelNameSuffix A suffix for the model name to use in case a model is deployed multiple times with
-     *                        different configurations which can be identified by a suffix to the model name. If not
-     *                        needed, it can be set to the empty string ""
+     * different configurations which can be identified by a suffix to the model name. If not needed, it can be set to
+     * the empty string ""
      * @param <T> The base class of the response type.
      * @return The response of type {@code responseType}.
      * @throws IOException Thrown if the execution of the request fails or if the body of the response can not be
-     *                      decoded to a string
+     * decoded to a string
      */
     public <T> Optional<T> makeInferenceRequest(final I inputObject, final Class<? extends T> responseType,
             final String modelNameSuffix)
@@ -149,12 +150,11 @@ public abstract class KServeClient<I> {
 
     protected final HttpUrl getModelURI(final String modelNameSuffix) {
         return HttpUrl.get(this.getUrlString(
-                this.httpsEnabled ? "https" : "http",
-                this.service,
+                this.serviceBaseUrl,
                 String.format("%s%s", this.modelName, modelNameSuffix)));
     }
 
-    protected abstract String getUrlString(String protocol, String service, String modelName);
+    protected abstract String getUrlString(URL serviceBaseUrl, String modelName);
 
     abstract String getBodyString(final I inputObject);
 

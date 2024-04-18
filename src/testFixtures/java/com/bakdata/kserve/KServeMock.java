@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2024 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,9 @@
 
 package com.bakdata.kserve;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.atomic.AtomicInteger;
 import lombok.Getter;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
@@ -31,24 +34,19 @@ import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public abstract class KServeMock {
     @Getter
     private final MockWebServer mockWebServer = new MockWebServer();
 
     abstract MockResponse getModelNotFoundResponse(String modelName);
 
-    public String getWholeServiceEndpoint() {
-        return this.getServiceName() + this.getBaseEndpoint();
-    }
-
-    public String getBaseEndpoint() {
-        return ":" + this.mockWebServer.getPort();
-    }
-
-    public String getServiceName() {
-        return this.mockWebServer.getHostName();
+    public URL getServiceBaseUrl() {
+        try {
+            return new URL(
+                    String.format("http://%s:%s", this.mockWebServer.getHostName(), this.mockWebServer.getPort()));
+        } catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setModelEndpoint(final String modelName, final String body) {

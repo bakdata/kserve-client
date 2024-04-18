@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2024 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package com.bakdata.kserve.client;
 
+import java.net.URL;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -38,8 +39,8 @@ import org.jsoup.nodes.Document;
 public class KServeClientV1 extends KServeClient<JSONObject> {
     @Builder
     KServeClientV1(
-            final String service, final String modelName, final OkHttpClient httpClient, final boolean httpsEnabled) {
-        super(service, modelName, httpClient, httpsEnabled);
+            final URL serviceBaseUrl, final String modelName, final OkHttpClient httpClient) {
+        super(serviceBaseUrl, modelName, httpClient);
     }
 
     @Override
@@ -49,8 +50,8 @@ public class KServeClientV1 extends KServeClient<JSONObject> {
     }
 
     @Override
-    protected String getUrlString(final String protocol, final String service, final String modelName) {
-        return String.format("%s://%s/v1/models/%s:predict", protocol, service, modelName);
+    protected String getUrlString(final URL serviceBaseUrl, final String modelName) {
+        return String.format("%s/v1/models/%s:predict", serviceBaseUrl, modelName);
     }
 
     @Override

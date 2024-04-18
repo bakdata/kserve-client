@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2024 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package com.bakdata.kserve.client;
 
+import java.net.URL;
 import java.time.Duration;
 
 /**
@@ -37,18 +38,17 @@ public interface KServeClientFactory<T> {
      * Get a {@link KServeClient} to make requests to an inference service supporting either the v1 or the v2 prediction
      * protocol.
      *
-     * @param service The host name of the service, e.g. "my-classifier.kserve-namespace.svc.cluster.local"
+     * @param serviceBaseUrl The base URL of the service, e.g.
+     * "http://my-classifier.kserve-namespace.svc.cluster.local"
      * @param modelName The model name as specified in model-settings.json or as key metadata.name in the
-     *                  InferenceService k8s object configuration file.
+     * InferenceService k8s object configuration file.
      * @param requestReadTimeout The read time out as documented for the
      * <a href="https://square.github.io/okhttp/4.x/okhttp/okhttp3/-ok-http-client/-builder/read-timeout/">OkHttpClient
-     *                           </a> which this library uses
-     * @param httpsEnabled Whether HTTPS should be used (true) or HTTP (false)
+     * </a> which this library uses
      * @return An instance of {@link KServeClient}
      */
     KServeClient<T> getKServeClient(
-            final String service,
+            final URL serviceBaseUrl,
             final String modelName,
-            final Duration requestReadTimeout,
-            final boolean httpsEnabled);
+            final Duration requestReadTimeout);
 }
