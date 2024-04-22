@@ -2,10 +2,9 @@ description = "A Java client for KServe inference services."
 
 plugins {
     `java-library`
-    id("net.researchgate.release") version "3.0.2"
+    id("com.bakdata.release") version "1.4.0"
     id("com.bakdata.sonar") version "1.4.0"
     id("com.bakdata.sonatype") version "1.4.0"
-    id("org.hildan.github.changelog") version "1.12.1"
     id("io.freefair.lombok") version "8.4"
     id("java-test-fixtures")
 }
@@ -60,11 +59,4 @@ configure<com.bakdata.gradle.SonatypeSettings> {
             id.set("jakob-ed")
         }
     }
-}
-
-configure<org.hildan.github.changelog.plugin.GitHubChangelogExtension> {
-    githubUser = "bakdata"
-    githubRepository = "kserve-client"
-    futureVersionTag = findProperty("changelog.releaseVersion")?.toString()
-    sinceTag = findProperty("changelog.sinceTag")?.toString()
 }
