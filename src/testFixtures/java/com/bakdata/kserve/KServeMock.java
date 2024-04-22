@@ -40,6 +40,28 @@ public abstract class KServeMock {
 
     abstract MockResponse getModelNotFoundResponse(String modelName);
 
+    /**
+     * Get the base endpoint of the mock.
+     *
+     * @return A base endpoint
+     * @deprecated This method is deprecated in favor of {@link #getServiceBaseUrl()}.
+     */
+    @Deprecated
+    public String getBaseEndpoint() {
+        return ":" + this.mockWebServer.getPort();
+    }
+
+    /**
+     * Get the service name of the mock.
+     *
+     * @return A service name
+     * @deprecated This method is deprecated in favor of {@link #getServiceBaseUrl()}.
+     */
+    @Deprecated
+    public String getServiceName() {
+        return this.mockWebServer.getHostName();
+    }
+
     public URL getServiceBaseUrl() {
         try {
             return new URL(
