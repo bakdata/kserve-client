@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2024 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,9 @@ import com.bakdata.kserve.client.KServeClient.InferenceRequestException;
 import com.bakdata.kserve.predictv2.InferenceRequest;
 import com.bakdata.kserve.predictv2.Parameters;
 import com.bakdata.kserve.predictv2.RequestInput;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.List;
 import lombok.Getter;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
@@ -41,10 +44,6 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.io.IOException;
-import java.time.Duration;
-import java.util.List;
 
 @ExtendWith(SoftAssertionsExtension.class)
 class KServeClientV2Test {
@@ -82,7 +81,7 @@ class KServeClientV2Test {
                 .build();
 
         this.softly.assertThat(client.makeInferenceRequest(getFakeInferenceRequest("data"),
-                FakePrediction.class, ""))
+                        FakePrediction.class, ""))
                 .map(FakePrediction::getFake)
                 .hasValue("data");
     }
@@ -97,7 +96,8 @@ class KServeClientV2Test {
                 .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(10000)))
                 .build();
         final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
-        this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, "") )
+        this.softly.assertThatThrownBy(
+                        () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
                 .hasMessage("Inference request failed: Model test-model not found");
     }
@@ -122,7 +122,8 @@ class KServeClientV2Test {
                 .build();
 
         final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
-        this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
+        this.softly.assertThatThrownBy(
+                        () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
                 .hasMessage("Inference request failed: Not Found");
     }
@@ -140,11 +141,11 @@ class KServeClientV2Test {
 
         final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
         this.softly.assertThat(client.makeInferenceRequest(fakeInferenceRequest,
-                CallCounterFakePrediction.class, ""))
+                        CallCounterFakePrediction.class, ""))
                 .hasValueSatisfying(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(2));
 
         this.softly.assertThat(client.makeInferenceRequest(fakeInferenceRequest,
-                CallCounterFakePrediction.class, ""))
+                        CallCounterFakePrediction.class, ""))
                 .hasValueSatisfying(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(3));
     }
 

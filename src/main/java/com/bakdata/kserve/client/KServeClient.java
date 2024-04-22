@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2024 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,11 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import io.github.resilience4j.core.IntervalFunction;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.time.Duration;
+import java.util.Optional;
+import java.util.concurrent.Callable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
@@ -41,17 +46,11 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.time.Duration;
-import java.util.Optional;
-import java.util.concurrent.Callable;
-
 /**
  * <p>An abstract client base class to make requests to a KServe inference service.</p>
  * It builds the request, handles the response and deals with various errors from the inference service. It
- * automatically retries requests in case they time out, e.g. due to the inference service being scaled to zero at
- * the time of the request. The exponential random back-off retry mechanism can be configured using the following
+ * automatically retries requests in case they time out, e.g. due to the inference service being scaled to zero at the
+ * time of the request. The exponential random back-off retry mechanism can be configured using the following
  * environment variables:
  * <ul>
  *     <li>KSERVE_RETRY_MAX_ATTEMPTS: The maximum number of retry attempts.</li>
@@ -68,6 +67,7 @@ import java.util.concurrent.Callable;
 @RequiredArgsConstructor
 public abstract class KServeClient<I> {
 
+    protected static final ObjectMapper OBJECT_MAPPER = createObjectMapper();
     private static final int RETRY_MAX_ATTEMPTS = Optional.ofNullable(System.getenv("KSERVE_RETRY_MAX_ATTEMPTS"))
             .map(Integer::parseInt)
             .orElse(10);
@@ -82,46 +82,10 @@ public abstract class KServeClient<I> {
             Optional.ofNullable(System.getenv("KSERVE_RETRY_MAX_INTERVAL"))
                     .map(Integer::parseInt).map(Duration::ofMillis)
                     .orElse(Duration.ofMillis(16000));
-
-    protected static final ObjectMapper OBJECT_MAPPER = createObjectMapper();
     private final String service;
     private final String modelName;
     private final OkHttpClient httpClient;
     private final boolean httpsEnabled;
-
-    @Slf4j
-    private static class RetryInterceptor implements Interceptor {
-        @NotNull
-        @Override
-        public Response intercept(final Chain chain) throws IOException {
-            final Request request = chain.request();
-
-            // wait_interval = min(max_interval, (initial_interval * multiplier^n) +/- (random_interval))
-            final IntervalFunction intervalFn = IntervalFunction.ofExponentialRandomBackoff(
-                    RETRY_INITIAL_INTERVAL, RETRY_MULTIPLIER, IntervalFunction.DEFAULT_RANDOMIZATION_FACTOR,
-                    RETRY_MAX_INTERVAL);
-
-            final RetryConfig retryConfig = RetryConfig.custom()
-                    // IOException may be thrown by chain.proceed(request)
-                    .retryExceptions(IOException.class)
-                    .maxAttempts(RETRY_MAX_ATTEMPTS)
-                    .intervalFunction(intervalFn)
-                    .failAfterMaxAttempts(true)
-                    .build();
-            final Retry retry = Retry.of("kserve-request-retry", retryConfig);
-
-            final Callable<Response> requestCallable = Retry.decorateCallable(retry, () -> {
-                log.debug("Making or retrying request {}.", request);
-                return chain.proceed(request);
-            });
-
-            try {
-                return requestCallable.call();
-            } catch (final Exception e) {
-                throw new IOException(e);
-            }
-        }
-    }
 
     protected static OkHttpClient getHttpClient(final Duration requestReadTimeout) {
         return new OkHttpClient.Builder()
@@ -145,6 +109,16 @@ public abstract class KServeClient<I> {
         } catch (final JsonProcessingException e) {
             throw new IllegalArgumentException("Could not process response json", e);
         }
+    }
+
+    private static Request getRequest(final String bodyString, final HttpUrl url) {
+        final MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        final RequestBody requestBody = RequestBody
+                .create(bodyString, mediaType);
+        return new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
     }
 
     /**
@@ -205,14 +179,38 @@ public abstract class KServeClient<I> {
         }
     }
 
-    private static Request getRequest(final String bodyString, final HttpUrl url) {
-        final MediaType mediaType = MediaType.get("application/json; charset=utf-8");
-        final RequestBody requestBody = RequestBody
-                .create(bodyString, mediaType);
-        return new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
+    @Slf4j
+    private static class RetryInterceptor implements Interceptor {
+        @NotNull
+        @Override
+        public Response intercept(final Chain chain) throws IOException {
+            final Request request = chain.request();
+
+            // wait_interval = min(max_interval, (initial_interval * multiplier^n) +/- (random_interval))
+            final IntervalFunction intervalFn = IntervalFunction.ofExponentialRandomBackoff(
+                    RETRY_INITIAL_INTERVAL, RETRY_MULTIPLIER, IntervalFunction.DEFAULT_RANDOMIZATION_FACTOR,
+                    RETRY_MAX_INTERVAL);
+
+            final RetryConfig retryConfig = RetryConfig.custom()
+                    // IOException may be thrown by chain.proceed(request)
+                    .retryExceptions(IOException.class)
+                    .maxAttempts(RETRY_MAX_ATTEMPTS)
+                    .intervalFunction(intervalFn)
+                    .failAfterMaxAttempts(true)
+                    .build();
+            final Retry retry = Retry.of("kserve-request-retry", retryConfig);
+
+            final Callable<Response> requestCallable = Retry.decorateCallable(retry, () -> {
+                log.debug("Making or retrying request {}.", request);
+                return chain.proceed(request);
+            });
+
+            try {
+                return requestCallable.call();
+            } catch (final Exception e) {
+                throw new IOException(e);
+            }
+        }
     }
 
     protected static final class InferenceRequestException extends IllegalArgumentException {
