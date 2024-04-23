@@ -1,6 +1,26 @@
 # Change Log
-- no changes!
 
+## [2.0.0](https://github.com/bakdata/kserve-client/tree/2.0.0) (2024-04-23)
+[View commits](https://github.com/bakdata/kserve-client/compare/2.0.0...2.0.0)
+
+
+## [2.0.0](https://github.com/bakdata/kserve-client/tree/2.0.0) (2024-04-23)
+[View commits](https://github.com/bakdata/kserve-client/compare/1.0.3...2.0.0)
+
+**Merged pull requests:**
+
+- Accept service URL instead of String and protocol [\#14](https://github.com/bakdata/kserve-client/pull/14) ([@JakobEdding](https://github.com/JakobEdding))
+- Update Gradle, Gradle plugins, GH workflows [\#13](https://github.com/bakdata/kserve-client/pull/13) ([@JakobEdding](https://github.com/JakobEdding))
+
+## [1.0.3](https://github.com/bakdata/kserve-client/tree/1.0.3) (2024-02-20)
+[View commits](https://github.com/bakdata/kserve-client/compare/1.0.2...1.0.3)
+
+**Merged pull requests:**
+
+- Fix Nexus release [\#12](https://github.com/bakdata/kserve-client/pull/12) ([@philipp94831](https://github.com/philipp94831))
+- Allow non\-null but empty Parameters object in inference response [\#11](https://github.com/bakdata/kserve-client/pull/11) ([@JakobEdding](https://github.com/JakobEdding))
+- Migrate azure pipeline to GH\-action [\#8](https://github.com/bakdata/kserve-client/pull/8) ([@MichaelKora](https://github.com/MichaelKora))
+- Fix Jacoco for Java 17 [\#10](https://github.com/bakdata/kserve-client/pull/10) ([@philipp94831](https://github.com/philipp94831))
 
 ## [1.0.2](https://github.com/bakdata/kserve-client/tree/1.0.2) (2024-01-26)
 [View commits](https://github.com/bakdata/kserve-client/compare/1.0.1...1.0.2)
