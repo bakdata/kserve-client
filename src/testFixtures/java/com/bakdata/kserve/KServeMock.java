@@ -46,7 +46,7 @@ public abstract class KServeMock {
      * @return A base endpoint
      * @deprecated This method is deprecated in favor of {@link #getServiceBaseUrl()}.
      */
-    @Deprecated
+    @Deprecated(since = "2.0.0")
     public String getBaseEndpoint() {
         return ":" + this.mockWebServer.getPort();
     }
@@ -57,7 +57,7 @@ public abstract class KServeMock {
      * @return A service name
      * @deprecated This method is deprecated in favor of {@link #getServiceBaseUrl()}.
      */
-    @Deprecated
+    @Deprecated(since = "2.0.0")
     public String getServiceName() {
         return this.mockWebServer.getHostName();
     }
