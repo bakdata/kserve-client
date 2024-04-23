@@ -24,10 +24,9 @@
 
 package com.bakdata.kserve.predictv2;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * A class to represent <a href="https://kserve.github.io/website/modelserving/inference_api/#parameters"> parameters as
@@ -35,8 +34,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Jacksonized
 public class Parameters {
     private String contentType;
     private Object extra;

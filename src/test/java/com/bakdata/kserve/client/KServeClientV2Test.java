@@ -75,7 +75,7 @@ class KServeClientV2Test {
         this.mockServer.setModelEndpoint("test-model", "{ \"fake\": \"data\"}");
 
         final KServeClientV2 client = KServeClientV2.builder()
-                .service(this.mockServer.getWholeServiceEndpoint())
+                .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 .modelName("test-model")
                 .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(10000)))
                 .build();
@@ -91,7 +91,7 @@ class KServeClientV2Test {
         this.mockServer.setModelEndpoint("test-model", "{ \"fake\": \"data\"}");
 
         final KServeClientV2 client = KServeClientV2.builder()
-                .service(this.mockServer.getWholeServiceEndpoint())
+                .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 .modelName("fake-model")
                 .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(10000)))
                 .build();
@@ -116,7 +116,7 @@ class KServeClientV2Test {
         this.mockServer.getMockWebServer().setDispatcher(dispatcher);
 
         final KServeClientV2 client = KServeClientV2.builder()
-                .service(this.mockServer.getWholeServiceEndpoint())
+                .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 .modelName("test-model")
                 .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(10000)))
                 .build();
@@ -133,7 +133,7 @@ class KServeClientV2Test {
         this.mockServer.setUpForRetryTest();
 
         final KServeClientV2 client = KServeClientV2.builder()
-                .service(this.mockServer.getWholeServiceEndpoint())
+                .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 // Important so that request is aborted and retried
                 .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(1000)))
                 .modelName("test-model")

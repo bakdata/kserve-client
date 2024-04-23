@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2024 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,11 +27,11 @@ package com.bakdata.kserve.client;
 import com.bakdata.kserve.predictv2.InferenceError;
 import com.bakdata.kserve.predictv2.InferenceRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.net.URL;
+import java.util.Optional;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
-
-import java.util.Optional;
 
 /**
  * An implementation of a {@link KServeClient} to support the
@@ -42,8 +42,8 @@ public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
 
     @Builder
     KServeClientV2(
-            final String service, final String modelName, final OkHttpClient httpClient, final boolean httpsEnabled) {
-        super(service, modelName, httpClient, httpsEnabled);
+            final URL serviceBaseUrl, final String modelName, final OkHttpClient httpClient) {
+        super(serviceBaseUrl, modelName, httpClient);
     }
 
     @Override
@@ -60,8 +60,8 @@ public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
     }
 
     @Override
-    protected String getUrlString(final String protocol, final String service, final String modelName) {
-        return String.format("%s://%s/v2/models/%s/infer", protocol, service, modelName);
+    protected String getUrlString(final URL serviceBaseUrl, final String modelName) {
+        return String.format("%s/v2/models/%s/infer", serviceBaseUrl, modelName);
     }
 
     @Override
