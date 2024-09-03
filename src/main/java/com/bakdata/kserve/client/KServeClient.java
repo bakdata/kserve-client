@@ -45,6 +45,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -100,7 +101,9 @@ public abstract class KServeClient<I> {
     }
 
     private static String getStringBody(final Response response) throws IOException {
-        return response.body().string();
+        try (ResponseBody body = response.body()) {
+            return body.string();
+        }
     }
 
     private static <T> Optional<T> processJsonResponse(final String stringBody, final Class<? extends T> responseType) {
