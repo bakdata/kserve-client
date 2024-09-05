@@ -1,8 +1,15 @@
 # Change Log
 
-## [2.0.0](https://github.com/bakdata/kserve-client/tree/2.0.0) (2024-04-23)
-[View commits](https://github.com/bakdata/kserve-client/compare/2.0.0...2.0.0)
+## [2.0.1](https://github.com/bakdata/kserve-client/tree/2.0.1) (2024-09-05)
+[View commits](https://github.com/bakdata/kserve-client/compare/2.0.1...2.0.1)
 
+
+## [2.0.1](https://github.com/bakdata/kserve-client/tree/2.0.1) (2024-09-05)
+[View commits](https://github.com/bakdata/kserve-client/compare/2.0.0...2.0.1)
+
+**Merged pull requests:**
+
+- Properly close response body [\#15](https://github.com/bakdata/kserve-client/pull/15) ([@JakobEdding](https://github.com/JakobEdding))
 
 ## [2.0.0](https://github.com/bakdata/kserve-client/tree/2.0.0) (2024-04-23)
 [View commits](https://github.com/bakdata/kserve-client/compare/1.0.3...2.0.0)
