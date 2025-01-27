@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 bakdata
+ * Copyright (c) 2025 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -74,10 +74,10 @@ class KServeClientV2Test {
     void makeInferenceRequest() throws IOException {
         this.mockServer.setModelEndpoint("test-model", "{ \"fake\": \"data\"}");
 
-        final KServeClientV2 client = KServeClientV2.builder()
+        final KServeClientV2<String> client = KServeClientV2.<String>builder()
                 .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 .modelName("test-model")
-                .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(10000)))
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         this.softly.assertThat(client.makeInferenceRequest(getFakeInferenceRequest("data"),
@@ -90,10 +90,10 @@ class KServeClientV2Test {
     void testPredictionNotExistingModel() {
         this.mockServer.setModelEndpoint("test-model", "{ \"fake\": \"data\"}");
 
-        final KServeClientV2 client = KServeClientV2.builder()
+        final KServeClientV2<String> client = KServeClientV2.<String>builder()
                 .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 .modelName("fake-model")
-                .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(10000)))
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
                 .build();
         final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
         this.softly.assertThatThrownBy(
@@ -115,10 +115,10 @@ class KServeClientV2Test {
         };
         this.mockServer.getMockWebServer().setDispatcher(dispatcher);
 
-        final KServeClientV2 client = KServeClientV2.builder()
+        final KServeClientV2<String> client = KServeClientV2.<String>builder()
                 .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 .modelName("test-model")
-                .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(10000)))
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
@@ -132,10 +132,10 @@ class KServeClientV2Test {
     void testRetry() throws IOException {
         this.mockServer.setUpForRetryTest();
 
-        final KServeClientV2 client = KServeClientV2.builder()
+        final KServeClientV2<String> client = KServeClientV2.<String>builder()
                 .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 // Important so that request is aborted and retried
-                .httpClient(KServeClientV2.getHttpClient(Duration.ofMillis(1000)))
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(1000)))
                 .modelName("test-model")
                 .build();
 

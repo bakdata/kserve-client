@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 bakdata
+ * Copyright (c) 2025 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,13 +33,13 @@ import okhttp3.OkHttpClient;
  * A factory producing a {@link KServeClient} to support the
  * <a href="https://kserve.github.io/website/modelserving/inference_api/">v2 prediction protocol</a>.
  */
-public class KServeClientFactoryV2 implements KServeClientFactory<InferenceRequest<?>> {
+public class KServeClientFactoryV2<T> implements KServeClientFactory<InferenceRequest<T>> {
     @Override
-    public KServeClient<InferenceRequest<?>> getKServeClient(
+    public KServeClient<InferenceRequest<T>> getKServeClient(
             final URL serviceBaseUrl,
             final String modelName,
             final Duration requestReadTimeout) {
         final OkHttpClient httpClient = KServeClient.getHttpClient(requestReadTimeout);
-        return new KServeClientV2(serviceBaseUrl, modelName, httpClient);
+        return new KServeClientV2<>(serviceBaseUrl, modelName, httpClient);
     }
 }
