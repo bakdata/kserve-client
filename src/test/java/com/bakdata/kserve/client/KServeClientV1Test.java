@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 bakdata
+ * Copyright (c) 2025 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +58,7 @@ class KServeClientV1Test {
         final KServeClientV1 client = KServeClientV1.builder()
                 .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 .modelName("test-model")
-                .httpClient(KServeClientV1.getHttpClient(Duration.ofMillis(10000)))
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         this.softly.assertThat(client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
@@ -74,7 +74,7 @@ class KServeClientV1Test {
         final KServeClientV1 client = KServeClientV1.builder()
                 .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 .modelName("fake-model")
-                .httpClient(KServeClientV1.getHttpClient(Duration.ofMillis(10000)))
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
@@ -104,12 +104,12 @@ class KServeClientV1Test {
         final KServeClientV1 client = KServeClientV1.builder()
                 .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 .modelName("test-model")
-                .httpClient(KServeClientV1.getHttpClient(Duration.ofMillis(10000)))
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         FakePrediction.class, ""))
-                .isInstanceOf(KServeClientV1.InferenceRequestException.class)
+                .isInstanceOf(KServeClient.InferenceRequestException.class)
                 .hasMessage(
                         "Inference request failed: 400: Unrecognized request format: Expecting ',' delimiter: line 3 "
                                 + "column 1 (char 48)");
@@ -122,7 +122,7 @@ class KServeClientV1Test {
         final KServeClientV1 client = KServeClientV1.builder()
                 .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
                 // Important so that request is aborted and retried
-                .httpClient(KServeClientV1.getHttpClient(Duration.ofMillis(1000)))
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(1000)))
                 .modelName("test-model")
                 .build();
 

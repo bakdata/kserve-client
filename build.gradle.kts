@@ -2,10 +2,10 @@ description = "A Java client for KServe inference services."
 
 plugins {
     `java-library`
-    id("com.bakdata.release") version "1.4.0"
-    id("com.bakdata.sonar") version "1.4.0"
-    id("com.bakdata.sonatype") version "1.4.1"
-    id("io.freefair.lombok") version "8.4"
+    id("com.bakdata.release") version "1.6.1"
+    id("com.bakdata.sonar") version "1.6.1"
+    id("com.bakdata.sonatype") version "1.7.1"
+    id("io.freefair.lombok") version "8.11"
     id("java-test-fixtures")
 }
 
@@ -20,25 +20,26 @@ repositories {
     mavenCentral()
 }
 
-configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
 }
 
 dependencies {
-    implementation(group = "org.jsoup", name = "jsoup", version = "1.17.2")
-    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.16.1")
+    implementation(group = "org.jsoup", name = "jsoup", version = "1.18.3")
+    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.18.2")
     val okHttpVersion: String by project
     implementation(group = "com.squareup.okhttp3", name = "okhttp", version = okHttpVersion)
-    implementation(group = "org.json", name = "json", version = "20231013")
+    implementation(group = "org.json", name = "json", version = "20250107")
     implementation(group = "io.github.resilience4j", name = "resilience4j-retry", version = "1.7.1")
-    implementation(group = "org.slf4j", name = "slf4j-api", version = "2.0.10")
+    implementation(group = "org.slf4j", name = "slf4j-api", version = "2.0.16")
 
     val junitVersion: String by project
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-params", version = junitVersion)
     testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
-    testImplementation(group = "org.assertj", name = "assertj-core", version = "3.25.1")
+    testImplementation(group = "org.assertj", name = "assertj-core", version = "3.27.2")
     testImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)
 
     testFixturesImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)

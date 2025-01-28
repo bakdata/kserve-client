@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 bakdata
+ * Copyright (c) 2025 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ import okhttp3.OkHttpClient;
  * <a href="https://kserve.github.io/website/modelserving/inference_api/">v2 prediction protocol</a>.
  */
 @Slf4j
-public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
+public class KServeClientV2<T> extends KServeClient<InferenceRequest<T>> {
 
     @Builder
     KServeClientV2(
@@ -65,7 +65,7 @@ public class KServeClientV2 extends KServeClient<InferenceRequest<?>> {
     }
 
     @Override
-    String getBodyString(final InferenceRequest<?> inputObject) {
+    String getBodyString(final InferenceRequest<T> inputObject) {
         try {
             return OBJECT_MAPPER.writeValueAsString(inputObject);
         } catch (final JsonProcessingException e) {
