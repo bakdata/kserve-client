@@ -1,8 +1,15 @@
 # Change Log
 
-## [2.0.1](https://github.com/bakdata/kserve-client/tree/2.0.1) (2024-09-05)
-[View commits](https://github.com/bakdata/kserve-client/compare/2.0.1...2.0.1)
+## [2.1.0](https://github.com/bakdata/kserve-client/tree/2.1.0) (2025-01-28)
+[View commits](https://github.com/bakdata/kserve-client/compare/2.1.0...2.1.0)
 
+
+## [2.1.0](https://github.com/bakdata/kserve-client/tree/2.1.0) (2025-01-28)
+[View commits](https://github.com/bakdata/kserve-client/compare/2.0.1...2.1.0)
+
+**Merged pull requests:**
+
+- Make client v2 generic [\#17](https://github.com/bakdata/kserve-client/pull/17) ([@philipp94831](https://github.com/philipp94831))
 
 ## [2.0.1](https://github.com/bakdata/kserve-client/tree/2.0.1) (2024-09-05)
 [View commits](https://github.com/bakdata/kserve-client/compare/2.0.0...2.0.1)
