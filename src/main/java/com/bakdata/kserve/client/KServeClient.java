@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 bakdata
+ * Copyright (c) 2025 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -101,7 +101,7 @@ public abstract class KServeClient<I> {
     }
 
     private static String getStringBody(final Response response) throws IOException {
-        try (ResponseBody body = response.body()) {
+        try (final ResponseBody body = response.body()) {
             return body.string();
         }
     }
@@ -145,8 +145,9 @@ public abstract class KServeClient<I> {
         final Request httpRequest = getRequest(
                 this.getBodyString(inputObject),
                 this.getModelURI(modelNameSuffix));
-        final Response response = this.executeRequest(httpRequest);
-        return this.processResponse(response, responseType);
+        try (final Response response = this.executeRequest(httpRequest)) {
+            return this.processResponse(response, responseType);
+        }
     }
 
     protected abstract String extractErrorMessage(String stringBody);
