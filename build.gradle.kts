@@ -2,10 +2,10 @@ description = "A Java client for KServe inference services."
 
 plugins {
     `java-library`
-    id("com.bakdata.release") version "1.6.1"
-    id("com.bakdata.sonar") version "1.6.1"
-    id("com.bakdata.sonatype") version "1.7.1"
-    id("io.freefair.lombok") version "8.11"
+    id("com.bakdata.release") version "1.9.1"
+    id("com.bakdata.sonar") version "1.9.1"
+    id("com.bakdata.sonatype") version "1.9.1"
+    id("io.freefair.lombok") version "8.12.2.1"
     id("java-test-fixtures")
 }
 
@@ -45,7 +45,7 @@ dependencies {
     testFixturesImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)
 }
 
-configure<com.bakdata.gradle.SonatypeSettings> {
+publication {
     developers {
         developer {
             name.set("Victor Künstler")
