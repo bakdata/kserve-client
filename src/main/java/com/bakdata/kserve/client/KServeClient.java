@@ -175,7 +175,7 @@ public abstract class KServeClient<I> {
                 return processJsonResponse(getStringBody(response), responseType);
             default:
                 final String errorMessage = this.extractErrorMessage(getStringBody(response));
-                throw new InferenceRequestException(errorMessage);
+                throw new InferenceRequestException(errorMessage, response.code());
         }
     }
 
@@ -214,8 +214,11 @@ public abstract class KServeClient<I> {
     }
 
     public static final class InferenceRequestException extends IllegalArgumentException {
-        public InferenceRequestException(final String message) {
+        private final int responseCode;
+
+        public InferenceRequestException(final String message, final int responseCode) {
             super("Inference request failed: " + message);
+            this.responseCode = responseCode;
         }
     }
 }
