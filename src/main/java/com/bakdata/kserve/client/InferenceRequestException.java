@@ -24,6 +24,9 @@
 
 package com.bakdata.kserve.client;
 
+/**
+ * Exception thrown when inference service request was unsuccessful.
+ */
 public final class InferenceRequestException extends IllegalArgumentException {
 
     public InferenceRequestException(final String message) {
