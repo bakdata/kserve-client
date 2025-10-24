@@ -26,7 +26,6 @@ package com.bakdata.kserve.client;
 
 import com.bakdata.kserve.KServeMock;
 import com.bakdata.kserve.KServeMockV2;
-import com.bakdata.kserve.client.KServeClient.InferenceRequestException;
 import com.bakdata.kserve.predictv2.InferenceRequest;
 import com.bakdata.kserve.predictv2.Parameters;
 import com.bakdata.kserve.predictv2.RequestInput;
@@ -81,9 +80,8 @@ class KServeClientV2Test {
                 .build();
 
         this.softly.assertThat(client.makeInferenceRequest(getFakeInferenceRequest("data"),
-                        FakePrediction.class, ""))
-                .map(FakePrediction::getFake)
-                .hasValue("data");
+                        FakePrediction.class, "").getFake())
+                .isEqualTo("data");
     }
 
     @Test
@@ -99,7 +97,7 @@ class KServeClientV2Test {
         this.softly.assertThatThrownBy(
                         () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessage("Inference request failed: Model test-model not found");
+                .hasMessage("Inference request failed: 404: Model test-model not found");
     }
 
     @Test
@@ -125,7 +123,7 @@ class KServeClientV2Test {
         this.softly.assertThatThrownBy(
                         () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessage("Inference request failed: Not Found");
+                .hasMessage("Inference request failed: 400: Not Found");
     }
 
     @Test
@@ -142,11 +140,11 @@ class KServeClientV2Test {
         final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
         this.softly.assertThat(client.makeInferenceRequest(fakeInferenceRequest,
                         CallCounterFakePrediction.class, ""))
-                .hasValueSatisfying(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(2));
+                .satisfies(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(2));
 
         this.softly.assertThat(client.makeInferenceRequest(fakeInferenceRequest,
                         CallCounterFakePrediction.class, ""))
-                .hasValueSatisfying(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(3));
+                .satisfies(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(3));
     }
 
     @Getter

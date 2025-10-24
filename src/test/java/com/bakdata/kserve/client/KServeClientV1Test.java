@@ -24,7 +24,7 @@
 
 package com.bakdata.kserve.client;
 
-import com.bakdata.kserve.client.KServeClient.InferenceRequestException;
+import com.bakdata.kserve.KServeMockV1;
 import java.io.IOException;
 import java.time.Duration;
 import lombok.Getter;
@@ -48,7 +48,7 @@ class KServeClientV1Test {
 
     @BeforeEach
     void init() {
-        this.mockServer = new com.bakdata.kserve.KServeMockV1();
+        this.mockServer = new KServeMockV1();
     }
 
     @Test
@@ -63,7 +63,7 @@ class KServeClientV1Test {
 
         this.softly.assertThat(client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         FakePrediction.class, ""))
-                .hasValueSatisfying(
+                .satisfies(
                         fakePrediction -> this.softly.assertThat(fakePrediction.getFake()).isEqualTo("data"));
     }
 
@@ -80,7 +80,7 @@ class KServeClientV1Test {
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessage("Inference request failed: 404: Model with name model does not exist.");
+                .hasMessage("Inference request failed: 404: 404: Model with name model does not exist.");
     }
 
     @Test
@@ -109,10 +109,10 @@ class KServeClientV1Test {
 
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         FakePrediction.class, ""))
-                .isInstanceOf(KServeClient.InferenceRequestException.class)
+                .isInstanceOf(InferenceRequestException.class)
                 .hasMessage(
-                        "Inference request failed: 400: Unrecognized request format: Expecting ',' delimiter: line 3 "
-                                + "column 1 (char 48)");
+                        "Inference request failed: 400: 400: Unrecognized request format: Expecting ',' delimiter: "
+                                + "line 3 column 1 (char 48)");
     }
 
     @Test
@@ -128,11 +128,11 @@ class KServeClientV1Test {
 
         this.softly.assertThat(client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         CallCounterFakePrediction.class, ""))
-                .hasValueSatisfying(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(2));
+                .satisfies(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(2));
 
         this.softly.assertThat(client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         CallCounterFakePrediction.class, ""))
-                .hasValueSatisfying(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(3));
+                .satisfies(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(3));
     }
 
     @Getter
