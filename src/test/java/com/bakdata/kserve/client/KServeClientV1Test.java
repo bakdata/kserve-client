@@ -24,6 +24,7 @@
 
 package com.bakdata.kserve.client;
 
+import com.bakdata.kserve.KServeMockV1;
 import java.io.IOException;
 import java.time.Duration;
 import lombok.Getter;
@@ -47,7 +48,7 @@ class KServeClientV1Test {
 
     @BeforeEach
     void init() {
-        this.mockServer = new com.bakdata.kserve.KServeMockV1();
+        this.mockServer = new KServeMockV1();
     }
 
     @Test
@@ -79,7 +80,7 @@ class KServeClientV1Test {
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessage("Inference request failed: 404: Model with name model does not exist.");
+                .hasMessage("Inference request failed: 404: 404: Model with name model does not exist.");
     }
 
     @Test
@@ -110,7 +111,8 @@ class KServeClientV1Test {
                         FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
                 .hasMessage(
-                        "Inference request failed: 400: Unrecognized request format: Expecting ',' delimiter: line 3 "
+                        "Inference request failed: 400: 400: Unrecognized request format: Expecting ',' delimiter: "
+                                + "line 3 "
                                 + "column 1 (char 48)");
     }
 

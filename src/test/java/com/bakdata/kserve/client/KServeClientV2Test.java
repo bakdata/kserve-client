@@ -97,7 +97,7 @@ class KServeClientV2Test {
         this.softly.assertThatThrownBy(
                         () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessage("Inference request failed: Model test-model not found");
+                .hasMessage("Inference request failed: 404: Model test-model not found");
     }
 
     @Test
@@ -123,7 +123,7 @@ class KServeClientV2Test {
         this.softly.assertThatThrownBy(
                         () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessage("Inference request failed: Not Found");
+                .hasMessage("Inference request failed: 400: Not Found");
     }
 
     @Test
