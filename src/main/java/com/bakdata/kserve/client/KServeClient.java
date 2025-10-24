@@ -171,13 +171,11 @@ public abstract class KServeClient<I> {
     private <T> T processResponse(final Response response, final Class<? extends T> responseType)
             throws IOException {
         final int responseCode = response.code();
-        switch (responseCode) {
-            case HttpURLConnection.HTTP_OK:
-                return processJsonResponse(getStringBody(response), responseType);
-            default:
-                final String errorMessage = this.extractErrorMessage(getStringBody(response));
-                throw new InferenceRequestException(errorMessage, responseCode);
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            return processJsonResponse(getStringBody(response), responseType);
         }
+        final String errorMessage = this.extractErrorMessage(getStringBody(response));
+        throw new InferenceRequestException(errorMessage, responseCode);
     }
 
     @Slf4j
@@ -214,12 +212,4 @@ public abstract class KServeClient<I> {
         }
     }
 
-    public static final class InferenceRequestException extends IllegalArgumentException {
-        private final int responseCode;
-
-        public InferenceRequestException(final String message, final int responseCode) {
-            super("Inference request failed: " + message);
-            this.responseCode = responseCode;
-        }
-    }
 }

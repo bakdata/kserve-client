@@ -24,7 +24,6 @@
 
 package com.bakdata.kserve.client;
 
-import com.bakdata.kserve.client.KServeClient.InferenceRequestException;
 import java.io.IOException;
 import java.time.Duration;
 import lombok.Getter;
@@ -109,7 +108,7 @@ class KServeClientV1Test {
 
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         FakePrediction.class, ""))
-                .isInstanceOf(KServeClient.InferenceRequestException.class)
+                .isInstanceOf(InferenceRequestException.class)
                 .hasMessage(
                         "Inference request failed: 400: Unrecognized request format: Expecting ',' delimiter: line 3 "
                                 + "column 1 (char 48)");

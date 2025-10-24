@@ -26,7 +26,6 @@ package com.bakdata.kserve.client;
 
 import com.bakdata.kserve.KServeMock;
 import com.bakdata.kserve.KServeMockV2;
-import com.bakdata.kserve.client.KServeClient.InferenceRequestException;
 import com.bakdata.kserve.predictv2.InferenceRequest;
 import com.bakdata.kserve.predictv2.Parameters;
 import com.bakdata.kserve.predictv2.RequestInput;
