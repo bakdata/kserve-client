@@ -213,7 +213,7 @@ public abstract class KServeClient<I> {
         }
     }
 
-    protected static final class InferenceRequestException extends IllegalArgumentException {
+    public static final class InferenceRequestException extends IllegalArgumentException {
         InferenceRequestException(final String message) {
             super("Inference request failed: " + message);
         }
