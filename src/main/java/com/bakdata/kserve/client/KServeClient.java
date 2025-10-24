@@ -175,7 +175,7 @@ public abstract class KServeClient<I> {
             return processJsonResponse(getStringBody(response), responseType);
         }
         final String errorMessage = this.extractErrorMessage(getStringBody(response));
-        throw new InferenceRequestException(errorMessage, responseCode);
+        throw new InferenceRequestException(String.format("%d: %s", responseCode, errorMessage));
     }
 
     @Slf4j

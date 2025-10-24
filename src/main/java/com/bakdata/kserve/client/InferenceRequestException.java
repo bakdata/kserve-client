@@ -24,14 +24,9 @@
 
 package com.bakdata.kserve.client;
 
-import lombok.Getter;
-
-@Getter
 public final class InferenceRequestException extends IllegalArgumentException {
-    private final int responseCode;
 
-    public InferenceRequestException(final String message, final int responseCode) {
+    public InferenceRequestException(final String message) {
         super("Inference request failed: " + message);
-        this.responseCode = responseCode;
     }
 }
