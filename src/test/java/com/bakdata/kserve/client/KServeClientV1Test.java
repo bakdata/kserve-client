@@ -63,7 +63,7 @@ class KServeClientV1Test {
 
         this.softly.assertThat(client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         FakePrediction.class, ""))
-                .hasValueSatisfying(
+                .satisfies(
                         fakePrediction -> this.softly.assertThat(fakePrediction.getFake()).isEqualTo("data"));
     }
 
@@ -128,11 +128,11 @@ class KServeClientV1Test {
 
         this.softly.assertThat(client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         CallCounterFakePrediction.class, ""))
-                .hasValueSatisfying(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(2));
+                .satisfies(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(2));
 
         this.softly.assertThat(client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         CallCounterFakePrediction.class, ""))
-                .hasValueSatisfying(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(3));
+                .satisfies(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(3));
     }
 
     @Getter

@@ -2,10 +2,10 @@ description = "A Java client for KServe inference services."
 
 plugins {
     `java-library`
-    id("com.bakdata.release") version "1.9.1"
-    id("com.bakdata.sonar") version "1.9.1"
-    id("com.bakdata.sonatype") version "1.9.1"
-    id("io.freefair.lombok") version "8.12.2.1"
+    id("com.bakdata.release") version "1.11.1"
+    id("com.bakdata.sonar") version "1.11.1"
+    id("com.bakdata.sonatype") version "1.11.1"
+    id("io.freefair.lombok") version "8.14.2"
     id("java-test-fixtures")
 }
 
@@ -33,13 +33,12 @@ dependencies {
     implementation(group = "com.squareup.okhttp3", name = "okhttp", version = okHttpVersion)
     implementation(group = "org.json", name = "json", version = "20250107")
     implementation(group = "io.github.resilience4j", name = "resilience4j-retry", version = "1.7.1")
-    implementation(group = "org.slf4j", name = "slf4j-api", version = "2.0.16")
+    implementation(group = "org.slf4j", name = "slf4j-api", version = "2.0.17")
 
     val junitVersion: String by project
-    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
-    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-params", version = junitVersion)
-    testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
-    testImplementation(group = "org.assertj", name = "assertj-core", version = "3.27.2")
+    testRuntimeOnly(group = "org.junit.platform", name = "junit-platform-launcher")
+    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = junitVersion)
+    testImplementation(group = "org.assertj", name = "assertj-core", version = "3.27.6")
     testImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)
 
     testFixturesImplementation(group = "com.squareup.okhttp3", name = "mockwebserver", version = okHttpVersion)

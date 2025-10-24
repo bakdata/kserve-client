@@ -106,9 +106,9 @@ public abstract class KServeClient<I> {
         }
     }
 
-    private static <T> Optional<T> processJsonResponse(final String stringBody, final Class<? extends T> responseType) {
+    private static <T> T processJsonResponse(final String stringBody, final Class<? extends T> responseType) {
         try {
-            return Optional.of(OBJECT_MAPPER.readValue(stringBody, responseType));
+            return OBJECT_MAPPER.readValue(stringBody, responseType);
         } catch (final JsonProcessingException e) {
             throw new IllegalArgumentException("Could not process response json", e);
         }
@@ -139,7 +139,7 @@ public abstract class KServeClient<I> {
      * @throws IOException Thrown if the execution of the request fails or if the body of the response can not be
      * decoded to a string
      */
-    public <T> Optional<T> makeInferenceRequest(final I inputObject, final Class<? extends T> responseType,
+    public <T> T makeInferenceRequest(final I inputObject, final Class<? extends T> responseType,
             final String modelNameSuffix)
             throws IOException {
         final Request httpRequest = getRequest(
@@ -168,18 +168,14 @@ public abstract class KServeClient<I> {
                 .newCall(httpRequest).execute();
     }
 
-    private <T> Optional<T> processResponse(final Response response, final Class<? extends T> responseType)
+    private <T> T processResponse(final Response response, final Class<? extends T> responseType)
             throws IOException {
         switch (response.code()) {
             case HttpURLConnection.HTTP_OK:
                 return processJsonResponse(getStringBody(response), responseType);
-            case HttpURLConnection.HTTP_NOT_FOUND:
-            case HttpURLConnection.HTTP_BAD_REQUEST:
+            default:
                 final String errorMessage = this.extractErrorMessage(getStringBody(response));
                 throw new InferenceRequestException(errorMessage);
-            default:
-                log.debug("Unknown response code: {}", response.code());
-                return Optional.empty();
         }
     }
 
