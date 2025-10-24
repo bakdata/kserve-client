@@ -112,8 +112,7 @@ class KServeClientV1Test {
                 .isInstanceOf(InferenceRequestException.class)
                 .hasMessage(
                         "Inference request failed: 400: 400: Unrecognized request format: Expecting ',' delimiter: "
-                                + "line 3 "
-                                + "column 1 (char 48)");
+                                + "line 3 column 1 (char 48)");
     }
 
     @Test
