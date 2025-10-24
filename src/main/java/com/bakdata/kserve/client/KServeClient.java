@@ -170,12 +170,13 @@ public abstract class KServeClient<I> {
 
     private <T> T processResponse(final Response response, final Class<? extends T> responseType)
             throws IOException {
-        switch (response.code()) {
+        final int responseCode = response.code();
+        switch (responseCode) {
             case HttpURLConnection.HTTP_OK:
                 return processJsonResponse(getStringBody(response), responseType);
             default:
                 final String errorMessage = this.extractErrorMessage(getStringBody(response));
-                throw new InferenceRequestException(errorMessage, response.code());
+                throw new InferenceRequestException(errorMessage, responseCode);
         }
     }
 
