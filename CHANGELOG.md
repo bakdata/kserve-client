@@ -1,69 +1,102 @@
-# Change Log
+# Changelog
 
-## [2.1.1](https://github.com/bakdata/kserve-client/tree/2.1.1) (2025-04-02)
-[View commits](https://github.com/bakdata/kserve-client/compare/2.1.1...2.1.1)
+All notable changes to this project will be documented in this file.
+
+## [2.2.0](https://github.com/bakdata/kserve-client/tree/2.2.0) - 2025-10-24
+### What's changed
+
+* Do not suppress unsuccessful requests by @philipp94831 in [#19](https://github.com/bakdata/kserve-client/pull/19)
 
 
-## [2.1.1](https://github.com/bakdata/kserve-client/tree/2.1.1) (2025-04-02)
-[View commits](https://github.com/bakdata/kserve-client/compare/2.1.0...2.1.1)
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/2.1.1...2.2.0
 
-**Merged pull requests:**
+## [2.1.1](https://github.com/bakdata/kserve-client/tree/2.1.1) - 2025-04-02
+### What's changed
 
-- Fix connection leak [\#18](https://github.com/bakdata/kserve-client/pull/18) ([@philipp94831](https://github.com/philipp94831))
+* Fix connection leak by @philipp94831 in [#18](https://github.com/bakdata/kserve-client/pull/18)
 
-## [2.1.0](https://github.com/bakdata/kserve-client/tree/2.1.0) (2025-01-28)
-[View commits](https://github.com/bakdata/kserve-client/compare/2.0.1...2.1.0)
 
-**Merged pull requests:**
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/2.1.0...2.1.1
 
-- Make client v2 generic [\#17](https://github.com/bakdata/kserve-client/pull/17) ([@philipp94831](https://github.com/philipp94831))
+## [2.1.0](https://github.com/bakdata/kserve-client/tree/2.1.0) - 2025-01-28
+### What's changed
 
-## [2.0.1](https://github.com/bakdata/kserve-client/tree/2.0.1) (2024-09-05)
-[View commits](https://github.com/bakdata/kserve-client/compare/2.0.0...2.0.1)
+* Make client v2 generic by @philipp94831 in [#17](https://github.com/bakdata/kserve-client/pull/17)
 
-**Merged pull requests:**
 
-- Properly close response body [\#15](https://github.com/bakdata/kserve-client/pull/15) ([@jkbe](https://github.com/jkbe))
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/2.0.1...2.1.0
 
-## [2.0.0](https://github.com/bakdata/kserve-client/tree/2.0.0) (2024-04-23)
-[View commits](https://github.com/bakdata/kserve-client/compare/1.0.3...2.0.0)
+## [2.0.1](https://github.com/bakdata/kserve-client/tree/2.0.1) - 2024-09-05
+### What's changed
 
-**Merged pull requests:**
+* Properly close response body by @jkbe in [#15](https://github.com/bakdata/kserve-client/pull/15)
 
-- Accept service URL instead of String and protocol [\#14](https://github.com/bakdata/kserve-client/pull/14) ([@jkbe](https://github.com/jkbe))
-- Update Gradle, Gradle plugins, GH workflows [\#13](https://github.com/bakdata/kserve-client/pull/13) ([@jkbe](https://github.com/jkbe))
 
-## [1.0.3](https://github.com/bakdata/kserve-client/tree/1.0.3) (2024-02-20)
-[View commits](https://github.com/bakdata/kserve-client/compare/1.0.2...1.0.3)
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/2.0.0...2.0.1
 
-**Merged pull requests:**
+## [2.0.0](https://github.com/bakdata/kserve-client/tree/2.0.0) - 2024-04-23
+### What's changed
 
-- Fix Nexus release [\#12](https://github.com/bakdata/kserve-client/pull/12) ([@philipp94831](https://github.com/philipp94831))
-- Allow non\-null but empty Parameters object in inference response [\#11](https://github.com/bakdata/kserve-client/pull/11) ([@jkbe](https://github.com/jkbe))
-- Migrate azure pipeline to GH\-action [\#8](https://github.com/bakdata/kserve-client/pull/8) ([@MichaelKora](https://github.com/MichaelKora))
-- Fix Jacoco for Java 17 [\#10](https://github.com/bakdata/kserve-client/pull/10) ([@philipp94831](https://github.com/philipp94831))
+* Update Gradle, Gradle plugins, GH workflows by @jkbe in [#13](https://github.com/bakdata/kserve-client/pull/13)
 
-## [1.0.2](https://github.com/bakdata/kserve-client/tree/1.0.2) (2024-01-26)
-[View commits](https://github.com/bakdata/kserve-client/compare/1.0.1...1.0.2)
+* Accept service URL instead of String and protocol by @jkbe in [#14](https://github.com/bakdata/kserve-client/pull/14)
 
-**Merged pull requests:**
 
-- Update dependencies [\#9](https://github.com/bakdata/kserve-client/pull/9) ([@philipp94831](https://github.com/philipp94831))
-- Set link to blog post [\#6](https://github.com/bakdata/kserve-client/pull/6) ([@jkbe](https://github.com/jkbe))
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/1.0.3...2.0.0
 
-## [1.0.1](https://github.com/bakdata/kserve-client/tree/1.0.1) (2022-06-03)
-[View commits](https://github.com/bakdata/kserve-client/compare/1.0.0...1.0.1)
+## [1.0.3](https://github.com/bakdata/kserve-client/tree/1.0.3) - 2024-02-20
+### What's changed
 
-**Merged pull requests:**
+* Fix Jacoco for Java 17 by @philipp94831 in [#10](https://github.com/bakdata/kserve-client/pull/10)
 
-- Fix package namespace in readme [\#5](https://github.com/bakdata/kserve-client/pull/5) ([@jkbe](https://github.com/jkbe))
-- Update dependencies jackson\-databind, jsoup [\#4](https://github.com/bakdata/kserve-client/pull/4) ([@jkbe](https://github.com/jkbe))
+* Migrate azure pipeline to GH-action by @MichaelKora in [#8](https://github.com/bakdata/kserve-client/pull/8)
 
-## [1.0.0](https://github.com/bakdata/kserve-client/tree/1.0.0) (2022-06-01)
-[View commits](https://github.com/bakdata/kserve-client/compare/c473888baa1173f779b244cd7d5ebd53dff1a0c7...1.0.0)
+* Allow non-null but empty Parameters object in inference response by @jkbe in [#11](https://github.com/bakdata/kserve-client/pull/11)
 
-**Merged pull requests:**
+* Fix Nexus release by @philipp94831 in [#12](https://github.com/bakdata/kserve-client/pull/12)
 
-- Make gradlew executable [\#3](https://github.com/bakdata/kserve-client/pull/3) ([@philipp94831](https://github.com/philipp94831))
-- Fix gradle build config for release [\#2](https://github.com/bakdata/kserve-client/pull/2) ([@jkbe](https://github.com/jkbe))
-- Add kserve\-client [\#1](https://github.com/bakdata/kserve-client/pull/1) ([@jkbe](https://github.com/jkbe))
+
+### New Contributors
+* @MichaelKora made their first contribution in [#8](https://github.com/bakdata/kserve-client/pull/8)
+
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/1.0.2...1.0.3
+
+## [1.0.2](https://github.com/bakdata/kserve-client/tree/1.0.2) - 2024-01-26
+### What's changed
+
+* Set link to blog post by @jkbe in [#6](https://github.com/bakdata/kserve-client/pull/6)
+
+* Update dependencies by @philipp94831 in [#9](https://github.com/bakdata/kserve-client/pull/9)
+
+
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/1.0.1...1.0.2
+
+## [1.0.1](https://github.com/bakdata/kserve-client/tree/1.0.1) - 2022-06-03
+### What's changed
+
+* Update dependencies jackson-databind, jsoup by @jkbe in [#4](https://github.com/bakdata/kserve-client/pull/4)
+
+* Fix package namespace in readme by @jkbe in [#5](https://github.com/bakdata/kserve-client/pull/5)
+
+
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/1.0.0...1.0.1
+
+## [1.0.0](https://github.com/bakdata/kserve-client/tree/1.0.0) - 2022-06-01
+### What's changed
+
+* Initial commit by @VictorKuenstler
+
+* Add kserve-client by @jkbe in [#1](https://github.com/bakdata/kserve-client/pull/1)
+
+* Fix gradle build config for release by @jkbe in [#2](https://github.com/bakdata/kserve-client/pull/2)
+
+* Make gradlew executable by @philipp94831 in [#3](https://github.com/bakdata/kserve-client/pull/3)
+
+
+### New Contributors
+* @bakdata-bot made their first contribution
+* @philipp94831 made their first contribution in [#3](https://github.com/bakdata/kserve-client/pull/3)
+* @jkbe made their first contribution in [#2](https://github.com/bakdata/kserve-client/pull/2)
+* @VictorKuenstler made their first contribution
+
+<!-- generated by git-cliff -->
