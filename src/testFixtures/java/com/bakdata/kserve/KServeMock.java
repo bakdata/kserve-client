@@ -24,19 +24,34 @@
 
 package com.bakdata.kserve;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.Getter;
-import okhttp3.mockwebserver.Dispatcher;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
+import mockwebserver3.Dispatcher;
+import mockwebserver3.MockResponse;
+import mockwebserver3.MockWebServer;
+import mockwebserver3.RecordedRequest;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class KServeMock {
+public abstract class KServeMock implements AutoCloseable {
     @Getter
     private final MockWebServer mockWebServer = new MockWebServer();
+
+    public KServeMock start() {
+        try {
+            this.mockWebServer.start();
+            return this;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void close() {
+        this.mockWebServer.close();
+    }
 
     abstract MockResponse getModelNotFoundResponse(String modelName);
 
@@ -76,13 +91,14 @@ public abstract class KServeMock {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
-                if (KServeMock.this.getEndpointString(modelName).equals(recordedRequest.getPath())) {
-                    return new MockResponse()
+                if (KServeMock.this.getEndpointString(modelName).equals(recordedRequest.getTarget())) {
+                    return new MockResponse.Builder()
                             .addHeader("Content-Type", "application/json; charset=utf-8")
-                            .setBody(body)
-                            .setResponseCode(200);
+                            .body(body)
+                            .code(200)
+                            .build();
                 } else {
-                    recordedRequest.getPath();
+                    recordedRequest.getTarget();
                     return KServeMock.this.getModelNotFoundResponse(modelName);
                 }
             }
@@ -99,16 +115,21 @@ public abstract class KServeMock {
                 if (callCounter.getAndIncrement() == 0) {
                     // Force request abortion because of 1s read timeout
                     Thread.sleep(2000);
-                    return new MockResponse().setResponseCode(400).setBody(
-                            """
+                    return new MockResponse.Builder()
+                            .code(400)
+                            .body("""
                                     <html>
                                     <title>400: request should be aborted before responding</title>
                                     
                                     <body>400</body>
                                     
-                                    </html>""");
+                                    </html>""")
+                            .build();
                 }
-                return new MockResponse().setResponseCode(200).setBody("{ \"counter\": " + callCounter + "}");
+                return new MockResponse.Builder()
+                        .code(200)
+                        .body("{ \"counter\": " + callCounter + "}")
+                        .build();
             }
         };
         this.mockWebServer.setDispatcher(dispatcher);

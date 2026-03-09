@@ -26,7 +26,7 @@ package com.bakdata.kserve;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import okhttp3.mockwebserver.MockResponse;
+import mockwebserver3.MockResponse;
 
 
 @Getter
@@ -34,12 +34,15 @@ import okhttp3.mockwebserver.MockResponse;
 public class KServeMockV2 extends KServeMock {
     @Override
     MockResponse getModelNotFoundResponse(final String modelName) {
-        return new MockResponse().setResponseCode(404).setBody(String.format(
-                """
-                        {
-                          "error": "Model %s not found"
-                        }""",
-                modelName));
+        return new MockResponse.Builder()
+                .code(404)
+                .body(String.format(
+                        """
+                                {
+                                  "error": "Model %s not found"
+                                }""",
+                        modelName))
+                .build();
     }
 
     @Override

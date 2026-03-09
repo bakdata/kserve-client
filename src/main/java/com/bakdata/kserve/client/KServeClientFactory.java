@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 bakdata
+ * Copyright (c) 2026 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +42,9 @@ public interface KServeClientFactory<T> {
      * "http://my-classifier.kserve-namespace.svc.cluster.local"
      * @param modelName The model name as specified in model-settings.json or as key metadata.name in the
      * InferenceService k8s object configuration file.
-     * @param requestReadTimeout The read time out as documented for the
-     * <a href="https://square.github.io/okhttp/4.x/okhttp/okhttp3/-ok-http-client/-builder/read-timeout/">OkHttpClient
-     * </a> which this library uses
+     * @param requestReadTimeout The read time out as documented for the <a href=
+     * "https://square.github.io/okhttp/5.x/okhttp/okhttp3/-ok-http-client/-builder/read-timeout.html">OkHttpClient</a>
+     * which this library uses
      * @return An instance of {@link KServeClient}
      */
     KServeClient<T> getKServeClient(

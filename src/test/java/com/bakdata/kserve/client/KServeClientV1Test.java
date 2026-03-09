@@ -28,14 +28,15 @@ import com.bakdata.kserve.KServeMockV1;
 import java.io.IOException;
 import java.time.Duration;
 import lombok.Getter;
-import okhttp3.mockwebserver.Dispatcher;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.RecordedRequest;
+import mockwebserver3.Dispatcher;
+import mockwebserver3.MockResponse;
+import mockwebserver3.RecordedRequest;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +49,12 @@ class KServeClientV1Test {
 
     @BeforeEach
     void init() {
-        this.mockServer = new KServeMockV1();
+        this.mockServer = new KServeMockV1().start();
+    }
+
+    @AfterEach
+    void tearDown() {
+        this.mockServer.close();
     }
 
     @Test
@@ -89,13 +95,16 @@ class KServeClientV1Test {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
-                return new MockResponse().setResponseCode(400).setBody("""
-                        <html>
-                        <title>400: Unrecognized request format: Expecting ',' delimiter: line 3 column 1 (char 48)</title>
-                        
-                        <body>400: Unrecognized request format: Expecting ',' delimiter: line 3 column 1 (char 48)</body>
-                        
-                        </html>""");
+                return new MockResponse.Builder()
+                        .code(400)
+                        .body("""
+                                <html>
+                                <title>400: Unrecognized request format: Expecting ',' delimiter: line 3 column 1 (char 48)</title>
+                                
+                                <body>400: Unrecognized request format: Expecting ',' delimiter: line 3 column 1 (char 48)</body>
+                                
+                                </html>""")
+                        .build();
             }
         };
         this.mockServer.getMockWebServer().setDispatcher(dispatcher);
