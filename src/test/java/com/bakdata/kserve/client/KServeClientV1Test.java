@@ -80,7 +80,7 @@ class KServeClientV1Test {
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessage("Inference request failed: 404: 404: Model with name model does not exist.");
+                .hasMessage("Inference request failed: 404: 404: Model with name test-model does not exist.");
     }
 
     @Test

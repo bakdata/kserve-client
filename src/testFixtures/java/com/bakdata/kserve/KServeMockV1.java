@@ -37,10 +37,9 @@ public class KServeMockV1 extends KServeMock {
         return new MockResponse().setResponseCode(404).setBody(String.format(
                 """
                         <html>
-                        <title>404: Model with name model does not exist.</title>
+                        <title>404: Model with name %s does not exist.</title>
                         
-                        <body>404: Model with name \
-                        model does not exist.</body>
+                        <body>404: Model with name %s does not exist.</body>
                         
                         </html>""",
                 modelName, modelName));
