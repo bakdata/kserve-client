@@ -25,6 +25,9 @@ updates:
       freefair-plugins:
         patterns:
           - "io.freefair*"
+      okhttp:
+        patterns:
+          - "com.squareup.okhttp3"
 
   - package-ecosystem: "github-actions"
     directory: "/"
