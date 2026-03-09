@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.1](https://github.com/bakdata/kserve-client/tree/2.2.1) - 2026-03-09
+### What's changed
+
+* chore: Use Gradle version catalogue, add Dependabot config by @jkbe in [#20](https://github.com/bakdata/kserve-client/pull/20)
+
+* Bump the plugins group with 3 updates by @dependabot[bot] in [#23](https://github.com/bakdata/kserve-client/pull/23)
+
+* Bump the ci-templates group with 2 updates by @dependabot[bot] in [#21](https://github.com/bakdata/kserve-client/pull/21)
+
+* Bump io.freefair.lombok from 8.14.2 to 9.2.0 in the freefair-plugins group by @dependabot[bot] in [#24](https://github.com/bakdata/kserve-client/pull/24)
+
+* Bump the test-dependencies group with 2 updates by @dependabot[bot] in [#22](https://github.com/bakdata/kserve-client/pull/22)
+
+* Bump org.jsoup:jsoup from 1.18.3 to 1.22.1 by @dependabot[bot] in [#25](https://github.com/bakdata/kserve-client/pull/25)
+
+* Bump com.fasterxml.jackson.core:jackson-databind from 2.18.2 to 2.21.1 by @dependabot[bot] in [#26](https://github.com/bakdata/kserve-client/pull/26)
+
+
+### New Contributors
+* @dependabot[bot] made their first contribution in [#26](https://github.com/bakdata/kserve-client/pull/26)
+
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/2.2.0...2.2.1
+
 ## [2.2.0](https://github.com/bakdata/kserve-client/tree/2.2.0) - 2025-10-24
 ### What's changed
 
