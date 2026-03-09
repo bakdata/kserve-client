@@ -39,10 +39,9 @@ public abstract class KServeMock implements AutoCloseable {
     @Getter
     private final MockWebServer mockWebServer = new MockWebServer();
 
-    public KServeMock start() {
+    public void start() {
         try {
             this.mockWebServer.start();
-            return this;
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }

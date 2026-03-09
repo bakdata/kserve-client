@@ -49,7 +49,8 @@ class KServeClientV1Test {
 
     @BeforeEach
     void init() {
-        this.mockServer = new KServeMockV1().start();
+        this.mockServer = new KServeMockV1();
+        this.mockServer.start();
     }
 
     @AfterEach
