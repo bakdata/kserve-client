@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2026 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,9 +35,10 @@ public class KServeMockV2 extends KServeMock {
     @Override
     MockResponse getModelNotFoundResponse(final String modelName) {
         return new MockResponse().setResponseCode(404).setBody(String.format(
-                "{\n"
-                        + "  \"error\": \"Model %s not found\"\n"
-                        + "}",
+                """
+                        {
+                          "error": "Model %s not found"
+                        }""",
                 modelName));
     }
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2025 bakdata
+ * Copyright (c) 2026 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -106,9 +106,10 @@ class KServeClientV2Test {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
-                return new MockResponse().setResponseCode(400).setBody("{\n"
-                        + "  \"detail\": \"Not Found\"\n"
-                        + "}");
+                return new MockResponse().setResponseCode(400).setBody("""
+                        {
+                          "detail": "Not Found"
+                        }""");
             }
         };
         this.mockServer.getMockWebServer().setDispatcher(dispatcher);

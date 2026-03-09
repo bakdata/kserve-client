@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 bakdata
+ * Copyright (c) 2026 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -100,8 +100,13 @@ public abstract class KServeMock {
                     // Force request abortion because of 1s read timeout
                     Thread.sleep(2000);
                     return new MockResponse().setResponseCode(400).setBody(
-                            "<html>\n<title>400: request should be aborted before responding</title>\n\n"
-                                    + "<body>400</body>\n\n</html>");
+                            """
+                                    <html>
+                                    <title>400: request should be aborted before responding</title>
+                                    
+                                    <body>400</body>
+                                    
+                                    </html>""");
                 }
                 return new MockResponse().setResponseCode(200).setBody("{ \"counter\": " + callCounter + "}");
             }

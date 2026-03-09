@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2025 bakdata
+ * Copyright (c) 2026 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,7 @@ class KServeClientV1Test {
         this.softly.assertThatThrownBy(() -> client.makeInferenceRequest(new JSONObject("{ \"input\": \"data\" }"),
                         FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessage("Inference request failed: 404: 404: Model with name model does not exist.");
+                .hasMessage("Inference request failed: 404: 404: Model with name test-model does not exist.");
     }
 
     @Test
@@ -89,14 +89,13 @@ class KServeClientV1Test {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
-                return new MockResponse().setResponseCode(400).setBody("<html>\n"
-                        + "<title>400: Unrecognized request format: Expecting ',' delimiter: line 3 column 1 (char "
-                        + "48)</title>\n"
-                        + "\n"
-                        + "<body>400: Unrecognized request format: Expecting ',' delimiter: line 3 column 1 (char 48)"
-                        + "</body>\n"
-                        + "\n"
-                        + "</html>");
+                return new MockResponse().setResponseCode(400).setBody("""
+                        <html>
+                        <title>400: Unrecognized request format: Expecting ',' delimiter: line 3 column 1 (char 48)</title>
+                        
+                        <body>400: Unrecognized request format: Expecting ',' delimiter: line 3 column 1 (char 48)</body>
+                        
+                        </html>""");
             }
         };
         this.mockServer.getMockWebServer().setDispatcher(dispatcher);

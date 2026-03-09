@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2026 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,16 @@
 
 package com.bakdata.kserve.predictv2;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * A class to represent an
  * <a href="https://kserve.github.io/website/modelserving/inference_api/#inference-request-json-object">
- *     Inference Request JSON Object as defined in the v2 prediction protocol</a>.
+ * Inference Request JSON Object as defined in the v2 prediction protocol</a>.
  *
  * @param <I> The type of the input {@code data} contained in a {@link RequestInput}.
  */

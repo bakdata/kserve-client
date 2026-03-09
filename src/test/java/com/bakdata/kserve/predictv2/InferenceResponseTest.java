@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 bakdata GmbH
+ * Copyright (c) 2026 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,9 +53,10 @@ public class InferenceResponseTest {
             "json_inference_responses/parameters_null.json",
             "json_inference_responses/parameters_empty.json"
     })
-    void shouldDeserialize(String jsonFilePath) throws IOException {
-        byte[] resourceFileBytes = getClass().getClassLoader().getResourceAsStream(jsonFilePath).readAllBytes();
-        String jsonInferenceResponse = new String(resourceFileBytes);
+    void shouldDeserialize(final String jsonFilePath) throws IOException {
+        final byte[] resourceFileBytes =
+                this.getClass().getClassLoader().getResourceAsStream(jsonFilePath).readAllBytes();
+        final String jsonInferenceResponse = new String(resourceFileBytes);
 
         this.softly.assertThatCode(() -> {
             this.objectMapper.readValue(jsonInferenceResponse, InferenceResponse.class);
