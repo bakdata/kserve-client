@@ -45,6 +45,14 @@ dependencies {
 publication {
     developers {
         developer {
+            name.set("Victor Künstler")
+            id.set("VictorKuenstler")
+        }
+        developer {
+            name.set("Alejandro Jaramillo")
+            id.set("irux")
+        }
+        developer {
             name.set("Jakob Edding")
             id.set("jkbe")
         }
