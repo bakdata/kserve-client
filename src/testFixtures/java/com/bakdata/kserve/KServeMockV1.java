@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2026 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,8 +35,14 @@ public class KServeMockV1 extends KServeMock {
     @Override
     MockResponse getModelNotFoundResponse(final String modelName) {
         return new MockResponse().setResponseCode(404).setBody(String.format(
-                "<html>\n<title>404: Model with name model does not exist.</title>\n\n<body>404: Model with name "
-                        + "model does not exist.</body>\n\n</html>",
+                """
+                        <html>
+                        <title>404: Model with name model does not exist.</title>
+                        
+                        <body>404: Model with name \
+                        model does not exist.</body>
+                        
+                        </html>""",
                 modelName, modelName));
     }
 

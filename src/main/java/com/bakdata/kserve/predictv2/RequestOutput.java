@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 bakdata
+ * Copyright (c) 2026 bakdata
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,8 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * A class to represent a <a href="https://kserve.github.io/website/modelserving/inference_api/#request-output">
- *     request output as defined in the v2 prediction protocol</a>.
+ * A class to represent a <a href="https://kserve.github.io/website/modelserving/inference_api/#request-output"> request
+ * output as defined in the v2 prediction protocol</a>.
  */
 @Data
 @Builder
