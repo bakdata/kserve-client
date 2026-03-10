@@ -1,6 +1,6 @@
 [versions]
 bakdata-plugins = "2.2.0"
-okhttp = "4.12.0"
+okhttp = "5.3.2"
 junit = "5.14.3"
 
 [libraries]
@@ -14,7 +14,7 @@ slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.17" }
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
 assertj-core = { group = "org.assertj", name = "assertj-core", version = "3.27.7" }
-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
+mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver3", version.ref = "okhttp" }
 
 [plugins]
 bakdata-release = { id = "com.bakdata.release", version.ref = "bakdata-plugins" }

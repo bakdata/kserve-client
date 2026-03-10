@@ -26,7 +26,7 @@ package com.bakdata.kserve;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import okhttp3.mockwebserver.MockResponse;
+import mockwebserver3.MockResponse;
 
 
 @Getter
@@ -34,15 +34,18 @@ import okhttp3.mockwebserver.MockResponse;
 public class KServeMockV1 extends KServeMock {
     @Override
     MockResponse getModelNotFoundResponse(final String modelName) {
-        return new MockResponse().setResponseCode(404).setBody(String.format(
-                """
-                        <html>
-                        <title>404: Model with name %s does not exist.</title>
-                        
-                        <body>404: Model with name %s does not exist.</body>
-                        
-                        </html>""",
-                modelName, modelName));
+        return new MockResponse.Builder()
+                .code(404)
+                .body(String.format(
+                        """
+                                <html>
+                                <title>404: Model with name %s does not exist.</title>
+                                
+                                <body>404: Model with name %s does not exist.</body>
+                                
+                                </html>""",
+                        modelName, modelName))
+                .build();
     }
 
     @Override

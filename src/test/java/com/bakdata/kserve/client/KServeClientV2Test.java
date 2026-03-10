@@ -33,13 +33,14 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import lombok.Getter;
-import okhttp3.mockwebserver.Dispatcher;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.RecordedRequest;
+import mockwebserver3.Dispatcher;
+import mockwebserver3.MockResponse;
+import mockwebserver3.RecordedRequest;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -67,6 +68,12 @@ class KServeClientV2Test {
     @BeforeEach
     void init() {
         this.mockServer = new KServeMockV2();
+        this.mockServer.start();
+    }
+
+    @AfterEach
+    void tearDown() {
+        this.mockServer.close();
     }
 
     @Test
@@ -79,8 +86,8 @@ class KServeClientV2Test {
                 .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
                 .build();
 
-        this.softly.assertThat(client.makeInferenceRequest(getFakeInferenceRequest("data"),
-                        FakePrediction.class, "").getFake())
+        this.softly.assertThat(
+                        client.makeInferenceRequest(getFakeInferenceRequest("data"), FakePrediction.class, "").getFake())
                 .isEqualTo("data");
     }
 
@@ -106,10 +113,13 @@ class KServeClientV2Test {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
-                return new MockResponse().setResponseCode(400).setBody("""
-                        {
-                          "detail": "Not Found"
-                        }""");
+                return new MockResponse.Builder()
+                        .code(400)
+                        .body("""
+                                {
+                                  "detail": "Not Found"
+                                }""")
+                        .build();
             }
         };
         this.mockServer.getMockWebServer().setDispatcher(dispatcher);
@@ -139,12 +149,10 @@ class KServeClientV2Test {
                 .build();
 
         final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
-        this.softly.assertThat(client.makeInferenceRequest(fakeInferenceRequest,
-                        CallCounterFakePrediction.class, ""))
+        this.softly.assertThat(client.makeInferenceRequest(fakeInferenceRequest, CallCounterFakePrediction.class, ""))
                 .satisfies(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(2));
 
-        this.softly.assertThat(client.makeInferenceRequest(fakeInferenceRequest,
-                        CallCounterFakePrediction.class, ""))
+        this.softly.assertThat(client.makeInferenceRequest(fakeInferenceRequest, CallCounterFakePrediction.class, ""))
                 .satisfies(fakePrediction -> this.softly.assertThat(fakePrediction.getCounter()).isEqualTo(3));
     }
 
