@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.1](https://github.com/bakdata/kserve-client/tree/3.0.1) - 2026-03-10
+### What's changed
+
+* Bump io.github.resilience4j:resilience4j-retry from 1.7.1 to 2.3.0 by @dependabot[bot] in [#30](https://github.com/bakdata/kserve-client/pull/30)
+
+* Bump org.junit.jupiter:junit-jupiter from 5.14.3 to 6.0.3 in the test-dependencies group by @dependabot[bot] in [#32](https://github.com/bakdata/kserve-client/pull/32)
+
+* Bump gradle-wrapper from 9.3.1 to 9.4.0 by @dependabot[bot] in [#27](https://github.com/bakdata/kserve-client/pull/27)
+
+
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/3.0.0...3.0.1
+
 ## [3.0.0](https://github.com/bakdata/kserve-client/tree/3.0.0) - 2026-03-10
 ### What's changed
 
