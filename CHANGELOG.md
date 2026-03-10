@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0](https://github.com/bakdata/kserve-client/tree/3.0.0) - 2026-03-10
+### What's changed
+
+* Bump org.json:json from 20250107 to 20251224 by @dependabot[bot] in [#29](https://github.com/bakdata/kserve-client/pull/29)
+
+* Update to Java 17 by @jkbe in [#31](https://github.com/bakdata/kserve-client/pull/31)
+
+* Bump okhttp from 4.12.0 to 5.3.2 by @dependabot[bot] in [#28](https://github.com/bakdata/kserve-client/pull/28)
+
+
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/2.2.1...3.0.0
+
 ## [2.2.1](https://github.com/bakdata/kserve-client/tree/2.2.1) - 2026-03-09
 ### What's changed
 
