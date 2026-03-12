@@ -24,11 +24,10 @@
 
 package com.bakdata.kserve.client;
 
-import com.bakdata.kserve.predictv2.InferenceError;
 import com.bakdata.kserve.predictv2.InferenceRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URL;
-import java.util.Optional;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -49,13 +48,27 @@ public class KServeClientV2<T> extends KServeClient<InferenceRequest<T>> {
     @Override
     protected String extractErrorMessage(final String stringBody) {
         try {
-            final InferenceError inferenceError = OBJECT_MAPPER.readValue(stringBody, InferenceError.class);
-            return Optional.ofNullable(inferenceError.getError())
-                    // fallback to details
-                    .or(() -> Optional.ofNullable(inferenceError.getDetail()))
-                    .orElseThrow(() -> new InferenceRequestException("Could not extract error message."));
+            final JsonNode root = OBJECT_MAPPER.readTree(stringBody);
+
+            if (root.has("error") && !root.get("error").isNull()) {
+                return root.get("error").asText();
+            }
+
+            if (root.has("detail")) {
+                final JsonNode detail = root.get("detail");
+
+                if (detail.isArray() && !detail.isEmpty()) {
+                    return detail.toString();
+                }
+
+                return detail.asText();
+            }
+
+            return "Unknown error occurred. Raw body: " + stringBody;
+
         } catch (final JsonProcessingException e) {
-            throw new IllegalArgumentException("Could not process JSON error object", e);
+            log.warn("Could not parse error body as JSON: {}", stringBody);
+            return stringBody;
         }
     }
 
