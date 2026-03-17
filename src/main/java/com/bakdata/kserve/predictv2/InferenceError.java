@@ -24,6 +24,8 @@
 
 package com.bakdata.kserve.predictv2;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
@@ -35,7 +37,8 @@ import lombok.extern.jackson.Jacksonized;
 @Value
 @Jacksonized
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InferenceError {
     String error;
-    String detail;
+    JsonNode detail;
 }
