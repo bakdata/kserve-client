@@ -138,36 +138,6 @@ class KServeClientV2Test {
     }
 
     @Test
-    void testFallbackDetailAsArray() {
-        final Dispatcher dispatcher = new Dispatcher() {
-            @NotNull
-            @Override
-            public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
-                return new MockResponse.Builder()
-                        .code(422)
-                        .body("""
-                                {
-                                  "detail": [{"loc": ["body"], "msg": "field required", "type": "value_error.missing"}]
-                                }""")
-                        .build();
-            }
-        };
-        this.mockServer.getMockWebServer().setDispatcher(dispatcher);
-
-        final KServeClientV2<String> client = KServeClientV2.<String>builder()
-                .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
-                .modelName("test-model")
-                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
-                .build();
-
-        final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
-        this.softly.assertThatThrownBy(
-                        () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
-                .isInstanceOf(InferenceRequestException.class)
-                .hasMessageContaining("field required");
-    }
-
-    @Test
     void testFallbackUnknownJsonBody() {
         final Dispatcher dispatcher = new Dispatcher() {
             @NotNull
@@ -191,10 +161,11 @@ class KServeClientV2Test {
                 .build();
 
         final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
+
         this.softly.assertThatThrownBy(
                         () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessageContaining("Unknown error occurred. Raw body:");
+                .hasMessageContaining("Could not extract error message.");
     }
 
     @Test
@@ -218,6 +189,7 @@ class KServeClientV2Test {
                 .build();
 
         final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
+
         this.softly.assertThatThrownBy(
                         () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)

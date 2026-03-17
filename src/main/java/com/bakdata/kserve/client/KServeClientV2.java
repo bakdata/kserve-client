@@ -27,7 +27,6 @@ package com.bakdata.kserve.client;
 import com.bakdata.kserve.predictv2.InferenceError;
 import com.bakdata.kserve.predictv2.InferenceRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URL;
 import java.util.Optional;
 import lombok.Builder;
@@ -47,19 +46,14 @@ public class KServeClientV2<T> extends KServeClient<InferenceRequest<T>> {
         super(serviceBaseUrl, modelName, httpClient);
     }
 
-    private static String extractDetailMessage(final JsonNode detail) {
-        return detail.isArray() && !detail.isEmpty() ? detail.toString() : detail.asText();
-    }
-
     @Override
     protected String extractErrorMessage(final String stringBody) {
         try {
             final InferenceError inferenceError = OBJECT_MAPPER.readValue(stringBody, InferenceError.class);
             return Optional.ofNullable(inferenceError.getError())
-                    .or(() -> Optional.ofNullable(inferenceError.getDetail()).map(KServeClientV2::extractDetailMessage))
-                    .orElse("An error occurred. Raw body: " + stringBody);
+                    .or(() -> Optional.ofNullable(inferenceError.getDetail()))
+                    .orElseThrow(() -> new InferenceRequestException("Could not extract error message."));
         } catch (final JsonProcessingException e) {
-            log.warn("Could not parse error body as JSON: {}", stringBody, e);
             return stringBody;
         }
     }
