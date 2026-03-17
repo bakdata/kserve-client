@@ -24,10 +24,12 @@
 
 package com.bakdata.kserve.client;
 
+import com.bakdata.kserve.predictv2.InferenceError;
 import com.bakdata.kserve.predictv2.InferenceRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URL;
+import java.util.Optional;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -39,9 +41,6 @@ import okhttp3.OkHttpClient;
 @Slf4j
 public class KServeClientV2<T> extends KServeClient<InferenceRequest<T>> {
 
-    public static final String DETAIL_FIELD = "detail";
-    private static final String ERROR_FIELD = "error";
-
     @Builder
     KServeClientV2(
             final URL serviceBaseUrl, final String modelName, final OkHttpClient httpClient) {
@@ -52,22 +51,13 @@ public class KServeClientV2<T> extends KServeClient<InferenceRequest<T>> {
         return detail.isArray() && !detail.isEmpty() ? detail.toString() : detail.asText();
     }
 
-    private static String extractErrorFromParsedBody(final JsonNode root, final String stringBody) {
-        final JsonNode errorNode = root.get(ERROR_FIELD);
-        if (errorNode != null && !errorNode.isNull()) {
-            return errorNode.asText();
-        }
-        if (root.has(DETAIL_FIELD)) {
-            return extractDetailMessage(root.get(DETAIL_FIELD));
-        }
-        return "Unknown error occurred. Raw body: " + stringBody;
-    }
-
     @Override
     protected String extractErrorMessage(final String stringBody) {
         try {
-            final JsonNode root = OBJECT_MAPPER.readTree(stringBody);
-            return extractErrorFromParsedBody(root, stringBody);
+            final InferenceError inferenceError = OBJECT_MAPPER.readValue(stringBody, InferenceError.class);
+            return Optional.ofNullable(inferenceError.getError())
+                    .or(() -> Optional.ofNullable(inferenceError.getDetail()).map(KServeClientV2::extractDetailMessage))
+                    .orElse("An error occurred. Raw body: " + stringBody);
         } catch (final JsonProcessingException e) {
             log.warn("Could not parse error body as JSON: {}", stringBody, e);
             return stringBody;
