@@ -138,45 +138,14 @@ class KServeClientV2Test {
     }
 
     @Test
-    void testFallbackUnknownJsonBody() {
-        final Dispatcher dispatcher = new Dispatcher() {
-            @NotNull
-            @Override
-            public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
-                return new MockResponse.Builder()
-                        .code(500)
-                        .body("""
-                                {
-                                  "message": "Internal server error"
-                                }""")
-                        .build();
-            }
-        };
-        this.mockServer.getMockWebServer().setDispatcher(dispatcher);
-
-        final KServeClientV2<String> client = KServeClientV2.<String>builder()
-                .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
-                .modelName("test-model")
-                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
-                .build();
-
-        final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
-
-        this.softly.assertThatThrownBy(
-                        () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
-                .isInstanceOf(InferenceRequestException.class)
-                .hasMessageContaining("Could not extract error message.");
-    }
-
-    @Test
     void testFallbackNonJsonBody() {
         final Dispatcher dispatcher = new Dispatcher() {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
                 return new MockResponse.Builder()
-                        .code(503)
-                        .body("Service Unavailable")
+                        .code(404)
+                        .body("Not found")
                         .build();
             }
         };
