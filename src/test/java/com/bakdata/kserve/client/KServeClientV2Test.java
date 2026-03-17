@@ -162,7 +162,7 @@ class KServeClientV2Test {
         this.softly.assertThatThrownBy(
                         () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
                 .isInstanceOf(InferenceRequestException.class)
-                .hasMessageContaining("Service Unavailable");
+                .hasMessageContaining("Not found");
     }
 
     @Test
