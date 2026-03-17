@@ -138,6 +138,93 @@ class KServeClientV2Test {
     }
 
     @Test
+    void testFallbackDetailAsArray() {
+        final Dispatcher dispatcher = new Dispatcher() {
+            @NotNull
+            @Override
+            public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
+                return new MockResponse.Builder()
+                        .code(422)
+                        .body("""
+                                {
+                                  "detail": [{"loc": ["body"], "msg": "field required", "type": "value_error.missing"}]
+                                }""")
+                        .build();
+            }
+        };
+        this.mockServer.getMockWebServer().setDispatcher(dispatcher);
+
+        final KServeClientV2<String> client = KServeClientV2.<String>builder()
+                .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
+                .modelName("test-model")
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
+                .build();
+
+        final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
+        this.softly.assertThatThrownBy(
+                        () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
+                .isInstanceOf(InferenceRequestException.class)
+                .hasMessageContaining("field required");
+    }
+
+    @Test
+    void testFallbackUnknownJsonBody() {
+        final Dispatcher dispatcher = new Dispatcher() {
+            @NotNull
+            @Override
+            public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
+                return new MockResponse.Builder()
+                        .code(500)
+                        .body("""
+                                {
+                                  "message": "Internal server error"
+                                }""")
+                        .build();
+            }
+        };
+        this.mockServer.getMockWebServer().setDispatcher(dispatcher);
+
+        final KServeClientV2<String> client = KServeClientV2.<String>builder()
+                .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
+                .modelName("test-model")
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
+                .build();
+
+        final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
+        this.softly.assertThatThrownBy(
+                        () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
+                .isInstanceOf(InferenceRequestException.class)
+                .hasMessageContaining("Unknown error occurred. Raw body:");
+    }
+
+    @Test
+    void testFallbackNonJsonBody() {
+        final Dispatcher dispatcher = new Dispatcher() {
+            @NotNull
+            @Override
+            public MockResponse dispatch(@NotNull final RecordedRequest recordedRequest) {
+                return new MockResponse.Builder()
+                        .code(503)
+                        .body("Service Unavailable")
+                        .build();
+            }
+        };
+        this.mockServer.getMockWebServer().setDispatcher(dispatcher);
+
+        final KServeClientV2<String> client = KServeClientV2.<String>builder()
+                .serviceBaseUrl(this.mockServer.getServiceBaseUrl())
+                .modelName("test-model")
+                .httpClient(KServeClient.getHttpClient(Duration.ofMillis(10000)))
+                .build();
+
+        final InferenceRequest<String> fakeInferenceRequest = getFakeInferenceRequest("data");
+        this.softly.assertThatThrownBy(
+                        () -> client.makeInferenceRequest(fakeInferenceRequest, FakePrediction.class, ""))
+                .isInstanceOf(InferenceRequestException.class)
+                .hasMessageContaining("Service Unavailable");
+    }
+
+    @Test
     void testRetry() throws IOException {
         this.mockServer.setUpForRetryTest();
 
