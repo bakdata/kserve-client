@@ -55,6 +55,7 @@ public class KServeClientV2<T> extends KServeClient<InferenceRequest<T>> {
                     .or(() -> Optional.ofNullable(inferenceError.getDetail()))
                     .orElseThrow(() -> new InferenceRequestException("Could not extract error message."));
         } catch (final JsonProcessingException e) {
+            log.warn("Could not parse error body as JSON: {}, {}", stringBody, e.getMessage());
             return stringBody;
         }
     }
