@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.2](https://github.com/bakdata/kserve-client/tree/3.0.2) - 2026-03-18
+### What's changed
+
+* Fix: Extract non-JSON error body by @vostres in [#33](https://github.com/bakdata/kserve-client/pull/33)
+
+
+### New Contributors
+* @vostres made their first contribution in [#33](https://github.com/bakdata/kserve-client/pull/33)
+
+**Full Changelog**: https://github.com/bakdata/kserve-client/compare/3.0.1...3.0.2
+
 ## [3.0.1](https://github.com/bakdata/kserve-client/tree/3.0.1) - 2026-03-10
 ### What's changed
 
