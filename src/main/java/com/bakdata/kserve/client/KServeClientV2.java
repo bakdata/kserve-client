@@ -51,6 +51,7 @@ public class KServeClientV2<T> extends KServeClient<InferenceRequest<T>> {
         try {
             final InferenceError inferenceError = OBJECT_MAPPER.readValue(stringBody, InferenceError.class);
             return Optional.ofNullable(inferenceError.getError())
+                    // fallback to details
                     .or(() -> Optional.ofNullable(inferenceError.getDetail()))
                     .orElseThrow(() -> new InferenceRequestException("Could not extract error message."));
         } catch (final JsonProcessingException e) {
