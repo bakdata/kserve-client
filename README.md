@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/bakdata/public/_apis/build/status/bakdata.kserve-client?repoName=bakdata%2Fkserve-client&branchName=main)](https://dev.azure.com/bakdata/public/_build/latest?definitionId=32&repoName=bakdata%2Fkserve-client&branchName=main)
+[![Build and Publish](https://github.com/bakdata/kserve-client/actions/workflows/build-and-publish.yaml/badge.svg)](https://github.com/bakdata/kserve-client/actions/workflows/build-and-publish.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.bakdata.kserve%3Akserve-client&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=com.bakdata.kserve%3Akserve-client)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.bakdata.kserve%3Akserve-client&metric=coverage)](https://sonarcloud.io/summary/new_code?id=com.bakdata.kserve%3Akserve-client)
 [![Maven](https://img.shields.io/maven-central/v/com.bakdata.kserve/kserve-client.svg)](https://search.maven.org/search?q=g:com.bakdata.kserve%20AND%20a:kserve-client&core=gav)
@@ -133,7 +133,7 @@ public final class App {
                 .orElseThrow();
     }
 
-    public static void main(final String[] args) {
+    static void main(final String[] args) {
         final Translation translation = getTranslation(TextToTranslate.builder().textToTranslate("Hello World").build());
         System.out.println(translation.getTranslatedText());
         // Hola Mundo
