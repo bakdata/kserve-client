@@ -20,4 +20,4 @@ mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver3", versi
 bakdata-release = { id = "com.bakdata.release", version.ref = "bakdata-plugins" }
 bakdata-sonar = { id = "com.bakdata.sonar", version.ref = "bakdata-plugins" }
 bakdata-sonatype = { id = "com.bakdata.sonatype", version.ref = "bakdata-plugins" }
-freefair-lombok = { id = "io.freefair.lombok", version = "9.2.0" }
+freefair-lombok = { id = "io.freefair.lombok", version = "9.4.0" }
