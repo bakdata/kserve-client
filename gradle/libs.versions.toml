@@ -9,7 +9,7 @@ jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-datab
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 json = { group = "org.json", name = "json", version = "20251224" }
 resilience4j-retry = { group = "io.github.resilience4j", name = "resilience4j-retry", version = "2.4.0" }
-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.17" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.18" }
 
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
