@@ -26,12 +26,12 @@ package com.bakdata.kserve.client;
 
 import com.bakdata.kserve.predictv2.InferenceError;
 import com.bakdata.kserve.predictv2.InferenceRequest;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.net.URL;
 import java.util.Optional;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
+import tools.jackson.core.JacksonException;
 
 /**
  * An implementation of a {@link KServeClient} to support the
@@ -54,7 +54,7 @@ public class KServeClientV2<T> extends KServeClient<InferenceRequest<T>> {
                     // fallback to details
                     .or(() -> Optional.ofNullable(inferenceError.getDetail()))
                     .orElseThrow(() -> new InferenceRequestException("Could not extract error message."));
-        } catch (final JsonProcessingException e) {
+        } catch (final JacksonException e) {
             log.warn("Could not parse error body as JSON: {}", stringBody, e);
             return stringBody;
         }

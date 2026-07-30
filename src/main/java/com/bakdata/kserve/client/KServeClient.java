@@ -24,9 +24,6 @@
 
 package com.bakdata.kserve.client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import io.github.resilience4j.core.IntervalFunction;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
@@ -47,6 +44,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * <p>An abstract client base class to make requests to a KServe inference service.</p>
@@ -96,8 +97,9 @@ public abstract class KServeClient<I> {
     }
 
     private static ObjectMapper createObjectMapper() {
-        return new ObjectMapper()
-                .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+        return JsonMapper.builder()
+                .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+                .build();
     }
 
     private static String getStringBody(final Response response) throws IOException {
@@ -109,7 +111,7 @@ public abstract class KServeClient<I> {
     private static <T> T processJsonResponse(final String stringBody, final Class<? extends T> responseType) {
         try {
             return OBJECT_MAPPER.readValue(stringBody, responseType);
-        } catch (final JsonProcessingException e) {
+        } catch (final JacksonException e) {
             throw new IllegalArgumentException("Could not process response json", e);
         }
     }

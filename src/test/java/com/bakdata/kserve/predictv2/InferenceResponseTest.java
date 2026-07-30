@@ -24,29 +24,25 @@
 
 package com.bakdata.kserve.predictv2;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import java.io.IOException;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(SoftAssertionsExtension.class)
 public class InferenceResponseTest {
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = JsonMapper.builder()
+            .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+            .build();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
-
-    @BeforeEach
-    void setUpObjectMapper() {
-        this.objectMapper = new ObjectMapper()
-                .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
-    }
 
     @ParameterizedTest
     @ValueSource(strings = {
@@ -58,8 +54,7 @@ public class InferenceResponseTest {
                 this.getClass().getClassLoader().getResourceAsStream(jsonFilePath).readAllBytes();
         final String jsonInferenceResponse = new String(resourceFileBytes);
 
-        this.softly.assertThatCode(() -> {
-            this.objectMapper.readValue(jsonInferenceResponse, InferenceResponse.class);
-        }).doesNotThrowAnyException();
+        this.softly.assertThatCode(() -> this.objectMapper.readValue(jsonInferenceResponse, InferenceResponse.class))
+                .doesNotThrowAnyException();
     }
 }
