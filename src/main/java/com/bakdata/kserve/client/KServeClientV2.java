@@ -69,7 +69,7 @@ public class KServeClientV2<T> extends KServeClient<InferenceRequest<T>> {
     String getBodyString(final InferenceRequest<T> inputObject) {
         try {
             return OBJECT_MAPPER.writeValueAsString(inputObject);
-        } catch (final JsonProcessingException e) {
+        } catch (final JacksonException e) {
             throw new IllegalArgumentException("Could not process inference request body", e);
         }
     }
