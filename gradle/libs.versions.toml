@@ -1,7 +1,7 @@
 [versions]
 bakdata-plugins = "2.2.0"
 okhttp = "5.4.0"
-junit = "6.1.0"
+junit = "6.1.2"
 
 [libraries]
 jsoup = { group = "org.jsoup", name = "jsoup", version = "1.22.2" }
