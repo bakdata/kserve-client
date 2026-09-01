@@ -1,5 +1,5 @@
 [versions]
-bakdata-plugins = "2.2.0"
+bakdata-plugins = "2.2.1"
 okhttp = "5.4.0"
 junit = "6.1.2"
 
