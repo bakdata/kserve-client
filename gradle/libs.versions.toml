@@ -1,6 +1,6 @@
 [versions]
 bakdata-plugins = "2.2.0"
-okhttp = "5.4.0"
+okhttp = "5.5.0"
 junit = "6.1.2"
 
 [libraries]
